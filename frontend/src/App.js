@@ -15,7 +15,7 @@ function App() {
       <Navigation>
         <Router>
           <Routes>
-            <Route path='/' element={<><Home /><Home /><Home /></>} />
+            <Route path='/' element={<><Home /></>} />
             {/* <Route path='/dashboard' element={</>}/> */}
           </Routes>
         </Router>
