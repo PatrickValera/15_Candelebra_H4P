@@ -12,14 +12,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {/* <Header /> */}
-      <Navigation />
-      <Router>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          {/* <Route path='/dashboard' element={</>}/> */}
-        </Routes>
-      </Router>
-
+      <Navigation>
+        <Router>
+          <Routes>
+            <Route path='/' element={<><Home /><Home /><Home /></>} />
+            {/* <Route path='/dashboard' element={</>}/> */}
+          </Routes>
+        </Router>
+      </Navigation>
     </ThemeProvider>
   );
 }
