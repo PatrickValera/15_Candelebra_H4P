@@ -49,7 +49,7 @@ const Chart = ({ news,tick: { ticker, name, color, startingValue }, portfolio, c
         // console.log('setting Interval')
         const interval = setInterval(() => {
             if (play) handleClick()
-        }, 400);
+        }, 300);
         //200 back
         const Newsinterval = setInterval(() => {
             let ran = Math.ceil((Math.random() * news.length)) - 1
@@ -125,7 +125,7 @@ const Chart = ({ news,tick: { ticker, name, color, startingValue }, portfolio, c
                         {/* <Button onClick={() => setRange(28)}>7</Button> */}
                         <Button value={28} sx={{ color: `${range === 28 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1w</Button>
                         <Button value={120} sx={{ color: `${range === 120 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1m</Button>
-                        <Button value={1440} sx={{ color: `${range === 1440 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1y</Button>
+                        <Button value={360} sx={{ color: `${range === 360 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>3m</Button>
                         <Button value={'max'} sx={{ color: `${range === 'max' ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>max</Button>
                     </Box>
 

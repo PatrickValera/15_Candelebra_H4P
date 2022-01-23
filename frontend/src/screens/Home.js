@@ -7,7 +7,7 @@ import {modifier} from '../modifiers'
 const tickers = [{
   ticker: 'PAN',
   name: 'Frying Pan',
-  color: '#EBEB50',
+  color: '#E4DD2F',
   startingValue: 200
 }, {
   ticker: 'Oui',
@@ -36,7 +36,7 @@ const tickers = [{
   startingValue: 700
 },]
 const Home = () => {
-  console.log(modifier)
+  // console.log(modifier)
   const [total, setTotal] = useState(0)
   const [cash, setCash] = useState(10000)
   const [portfolio, setPortfolio] = useState({})
@@ -66,9 +66,11 @@ const Home = () => {
           </Box>
           {/* ========TICKERS============================ */}
           <Box display='flex' sx={{ width: '100%', flexWrap: 'wrap', p: 1 }}>
-            {tickers.map((tick, index) => (
-              <Chart news={modifier[0]} key={index} tick={tick} setPortfolio={setPortfolio} setCash={setCash} portfolio={portfolio} cash={cash} />
-            ))}
+            {tickers.map((tick, index) => {
+              console.log(Math.floor(Math.random()*2))
+              return (
+              <Chart news={modifier[Math.floor(Math.random()*2)]} key={index} tick={tick} setPortfolio={setPortfolio} setCash={setCash} portfolio={portfolio} cash={cash} />
+            )})}
           </Box>
         </Box>
         {/* ========SIDE============================ */}
