@@ -39,7 +39,8 @@ const ChartContainer = ({ range, data, color }) => {
                                     <stop offset="95%" stopColor="#fff" stopOpacity={0.1} />
                                 </linearGradient>
                             </defs>
-                            <Tooltip />
+                            <Tooltip content={<CustomToolTip />} />
+
 
                             <Line type="monotone" unit="M" strokeLinecap="round" strokeWidth={2}
                                 // style={{ strokeDasharray: `40% 60%` }}
@@ -61,9 +62,10 @@ const ChartContainer = ({ range, data, color }) => {
 const CustomToolTip = ({ active, payload, label }) => {
     return (
         <>
-            {payload && payload.length && <Box>
-                <Typography variant='body2'>{label}</Typography>
-                <Typography variant='body2'>{toLocale(payload[0].value)}</Typography>
+            {payload && payload.length && 
+            <Box sx={{bgcolor:'white',p:2,borderRadius:1,border:'1px solid #ddd'}}>
+                {/* <Typography variant='body2'>{label}</Typography> */}
+                <Typography variant='body2' color='success.light'>${toLocale(payload[0].value)}</Typography>
             </Box>
             }
         </>

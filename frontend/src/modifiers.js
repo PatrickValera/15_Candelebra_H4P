@@ -1,13 +1,13 @@
 export const modifier = [[{
-    desc: '+100, +.3, 0',
+    desc: '+100, +.3, 20',
     vlty: .3,
-    chance: .5,
+    chance: .8,
     target: 100,
-    init: 0,
+    init: 20,
 }, {
     desc: '-80, +.3, 0',
     vlty: .3,
-    chance: .8,
+    chance: .6,
     target: -80,
     init: 0,
 }, {
@@ -17,9 +17,9 @@ export const modifier = [[{
     target: 300,
     init: 50,
 }, {
-    desc: '-300, +.4, 0',
+    desc: '-200, +.4, 0',
     vlty: .4,
-    chance: .08,
+    chance: .04,
     target: -200,
     init: 0,
 }, {
@@ -29,11 +29,11 @@ export const modifier = [[{
     target: 1000,
     init: 300,
 }, {
-    desc: '-400, +1, -600',
+    desc: '-200, +1, -600',
     vlty: -1,
     chance: .03,
-    target: -400,
-    init: -300,
+    target: -200,
+    init: -50,
 },
 // {
 //     desc: '-4000, +1, -1200',
@@ -73,7 +73,7 @@ export const modifier = [[{
 }, {
     desc: '-80, +.3, 0',
     vlty: .3,
-    chance: .8,
+    chance: .4,
     target: -80,
     init: 0,
 }, {
@@ -83,11 +83,11 @@ export const modifier = [[{
     target: 300,
     init: 50,
 }, {
-    desc: '-300, +.4, 0',
+    desc: '-200, +.4, 0',
     vlty: .4,
-    chance: .15,
-    target: -300,
-    init: 0,
+    chance: .06,
+    target: -200,
+    init: 20,
 }, {
     desc: '+500, +1, +300',
     vlty: .5,
