@@ -2,7 +2,7 @@ import { Box, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { toLocale } from '../utils';
 import { RiMoneyDollarBoxFill, RiBarChartBoxFill } from "react-icons/ri";
-
+import Bar from './Bar';
 const calcGain = (portfolio) => {
     let gain = 0
     for (const property in portfolio) {
@@ -21,7 +21,7 @@ const calcPercent = (portfolio) => {
     }
     return((totalVal-totalCost)/totalCost)
 }
-    const PortfolioPanel = ({ cash, portfolio, total: totalInvestment }) => {
+    const PortfolioPanel = ({ cash, portfolio, total: totalInvestment, tickers }) => {
         const [gain, setGain] = useState(0)
         const [gainPercent, setGainPercent] = useState(0)
 
@@ -89,9 +89,10 @@ const calcPercent = (portfolio) => {
 
                 {/* ====== POSITIONS CONTAINER ==================*/}
                 <Box>
-                    <Typography variant='body2'>FP: {portfolio['FP'] && toLocale(portfolio['FP'].value)}</Typography>
+                    {tickers.map((x,index)=>(<Bar key={index} ticker={x}portfolio={portfolio}/>))}
+                    {/* <Typography variant='body2'>FP: {portfolio['FP'] && toLocale(portfolio['FP'].value)}</Typography>
                     <Typography variant='body2'>XIN: {portfolio['XIN'] && toLocale(portfolio['XIN'].value)}</Typography>
-                    <Typography variant='body2'>PAL: {portfolio['PAL'] && toLocale(portfolio['PAL'].value)}</Typography>
+                    <Typography variant='body2'>PAL: {portfolio['PAL'] && toLocale(portfolio['PAL'].value)}</Typography> */}
                 </Box>
             </Box>
         )

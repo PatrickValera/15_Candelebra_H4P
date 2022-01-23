@@ -1,7 +1,7 @@
 import { Box, Button, Divider, OutlinedInput, Paper, Tab, Tabs, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { toLocale } from '../utils'
+import { toLocale,getColor } from '../utils'
 import ChartContainer from './ChartContainer';
 import { darken, lighten } from '@mui/material/styles'
 import { theme } from '../themes/theme'
@@ -161,10 +161,7 @@ const Chart = ({ tick: { ticker, name, color, startingValue }, portfolio, cash, 
     }, [day]);
 
 
-    const getColor = (col) => {
-        let a = col
-        return a
-    }
+
     return (
         <>
             <Box sx={{ p: 2, width: { xs: '100%', md: '50%' }, }}>

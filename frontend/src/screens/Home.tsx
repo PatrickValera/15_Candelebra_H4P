@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React, { Profiler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from '../components/Chart'
 import PortfolioPanel from '../components/PortfolioPanel'
 
@@ -7,7 +7,7 @@ import PortfolioPanel from '../components/PortfolioPanel'
 const tickers = [{
   ticker: 'PAN',
   name: 'Frying Pan',
-  color: '#EFEF51',
+  color: '#EBEB50',
   startingValue: 200
 }, {
   ticker: 'XIN',
@@ -40,32 +40,6 @@ const Home = () => {
   const [cash, setCash] = useState(10000)
   const [portfolio, setPortfolio] = useState({})
 
-  // const calcTotal = () => {
-  //   let tot=0
-  //   console.log('CALCULATING=====')
-  //   for (const prop in portfolio) {
-  //     console.log(prop)
-  //     let aNum=portfolio[prop].value
-  //     if(portfolio[prop])tot = tot+aNum
-  //     console.log(tot)
-
-  //   }
-  //   setTotal(tot)
-  // }
-  // useEffect(() => {
-  //   // console.log('hello')
-  //   // console.log(portfolio)
-  //   const totalInterval = setInterval(() => {
-  //     console.log('starting interval')
-  //     calcTotal()
-  //   },5000)
-  //   return () => {
-  //     console.log('cleaning up intervals')
-  //     clearInterval(totalInterval);
-  // }
-
-
-  // }, [])
   useEffect(()=>{
       let tot=0
     // console.log('CALCULATING=====')
@@ -98,7 +72,7 @@ const Home = () => {
         </Box>
         {/* ========SIDE============================ */}
         <Box sx={{ flex: '0 0 300px' }}>
-          <PortfolioPanel cash={cash} portfolio={portfolio} total={total} />
+          <PortfolioPanel cash={cash} portfolio={portfolio} total={total} tickers={tickers}/>
         </Box>
 
       </Box>
