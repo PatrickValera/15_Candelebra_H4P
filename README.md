@@ -8,3 +8,5 @@
 -HTML/CSS/JS
 -React
 -Material UI
+
+![alt text](https://github.com/[PatrickValera]/[15_Candelebra_H4P]/blob/[main]/frontent/src/public/screenshot.png?raw=true)
