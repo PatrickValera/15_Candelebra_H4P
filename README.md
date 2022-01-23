@@ -9,4 +9,4 @@
 -React
 -Material UI
 
-![alt text](https://github.com/[PatrickValera]/[15_Candelebra_H4P]/blob/[main]/frontent/src/public/screenshot.png?raw=true)
+![alt text](https://github.com/[PatrickValera]/[15_Candelebra_H4P]/blob/[main]/frontent/public/screenshot.png?raw=true)
