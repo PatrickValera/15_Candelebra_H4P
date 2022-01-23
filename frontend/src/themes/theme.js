@@ -7,7 +7,7 @@ let theme= createTheme({})
             light: '#1C1E1F',
             main: '#181A1B',
             dark: '#161819',
-            contrastText: '#a9a9aC',
+            contrastText: '#c9c9cC',
         },
         // background: {
         //     paper: '#27292E',
@@ -87,13 +87,17 @@ let theme= createTheme({})
     components: {
         MuiButtonBase: {
             defaultProps: {
-                // disableRipple: true, 
+                disableRipple: true, 
+            
                 // No more ripple!
             },
         },
         MuiButton:{
             defaultProps:{
-                variant:'contained'
+                // variant:'contained',
+                size:'small',
+                disableElevation: true,
+
             }
         }
         // MuiPaper:{

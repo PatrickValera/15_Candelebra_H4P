@@ -26,7 +26,7 @@ const calcPercent = (portfolio) => {
         const [gainPercent, setGainPercent] = useState(0)
 
         useEffect(() => {
-            console.log(portfolio)
+            // console.log(portfolio)
             if (portfolio) {
                 setGain(calcGain(portfolio))
                 setGainPercent(calcPercent(portfolio))

@@ -68,12 +68,12 @@ const Home = () => {
   // }, [])
   useEffect(()=>{
       let tot=0
-    console.log('CALCULATING=====')
+    // console.log('CALCULATING=====')
     for (const prop in portfolio) {
-      console.log(prop)
+      // console.log(prop)
       let aNum=portfolio[prop].value
       if(portfolio[prop])tot = tot+aNum
-      console.log(tot)
+      // console.log(tot)
 
     }
     setTotal(tot)
