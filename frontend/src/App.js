@@ -2,7 +2,7 @@ import { theme } from './themes/theme'
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, CssBaseline, Paper } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './screens/Home.tsx';
+import Home from './screens/Home.js';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import './App.css';

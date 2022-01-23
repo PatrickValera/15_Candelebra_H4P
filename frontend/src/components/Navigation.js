@@ -16,6 +16,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Header from './Header';
 // import Header from './Header'
 const drawerWidth = 240;
 
@@ -91,7 +92,7 @@ export default function Navigation({ children }) {
                         <MenuIcon />
                     </IconButton>
 
-                    {/* <Header/> */}
+                    <Header/>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -108,9 +109,9 @@ export default function Navigation({ children }) {
                 open={open}
             >
                 <DrawerHeader sx={{ pb: '40px' }}>
-                    Canelebra
+                    Useless Nav lul (for now)
                     <IconButton onClick={handleDrawerClose}>
-                        ABUTTON
+                        {'>'}
                         {/* {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />} */}
                     </IconButton>
                 </DrawerHeader>

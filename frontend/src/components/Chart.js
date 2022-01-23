@@ -1,77 +1,12 @@
 import { Box, Button, Divider, OutlinedInput, Paper, Tab, Tabs, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { toLocale,getColor } from '../utils'
+import { toLocale, getColor } from '../utils'
 import ChartContainer from './ChartContainer';
 import { darken, lighten } from '@mui/material/styles'
 import { theme } from '../themes/theme'
-const news = [{
-    desc: '+100, +.3, 0',
-    vlty: .3,
-    chance: .5,
-    target: 100,
-    init: 0,
-}, {
-    desc: '-80, +.3, 0',
-    vlty: .3,
-    chance: .8,
-    target: -80,
-    init: 0,
-}, {
-    desc: '+300, +.4, 0',
-    vlty: .4,
-    chance: .2,
-    target: 300,
-    init: 50,
-}, {
-    desc: '-300, +.4, 0',
-    vlty: .4,
-    chance: .3,
-    target: -300,
-    init: 0,
-}, {
-    desc: '+1000, +1, +300',
-    vlty: 1,
-    chance: .1,
-    target: 1000,
-    init: 300,
-}, {
-    desc: '-1000, +1, -600',
-    vlty: 1,
-    chance: .06,
-    target: -1000,
-    init: -400,
-},
-// {
-//     desc: '-4000, +1, -1200',
-//     vlty: 1,
-//     chance: .2,
-//     target: -4000,
-//     init: -1200,
-// },
-{
-    desc: '+4000, +1, +200',
-    vlty: 1,
-    chance: .2,
-    target: 4000,
-    init: 200,
-},
 
-
-{
-    desc: '0, -1, 0',
-    vlty: -1,
-    chance: .9,
-    target: 0,
-    init: 0,
-}, {
-    desc: '0, +1, 0',
-    vlty: 1,
-    chance: .5,
-    target: 0,
-    init: 0,
-},]
-const Chart = ({ tick: { ticker, name, color, startingValue }, portfolio, cash, setPortfolio, setCash }) => {
+const Chart = ({ news,tick: { ticker, name, color, startingValue }, portfolio, cash, setPortfolio, setCash }) => {
     const [intent, setIntent] = useState(1)
     const [avgCost, setAvgCost] = useState(0)
     const [shares, setShares] = useState(0)
@@ -199,15 +134,16 @@ const Chart = ({ tick: { ticker, name, color, startingValue }, portfolio, cash, 
                     <Divider sx={{ my: 2 }} />
 
                     {/* =====BUY BUTTONS=============================================== */}
-                    <Box display='flex' sx={{ alignItems: 'center',px:2 }}>
+                    <Box display='flex' sx={{ alignItems: 'center', px: 2 }}>
                         <Box sx={{ flexGrow: '1' }}>
-                            <Box display='flex' sx={{width:'min-content',p:1,gap:1,borderRadius:2,alignItems:'flex-end', bgcolor: lighten(getColor(color), .8)}}>
+                            <Box display='flex' sx={{ width: 'min-content', p: 1, gap: 1, borderRadius: 2, alignItems: 'flex-end', bgcolor: lighten(getColor(color), .8) }}>
                                 <Typography variant='h4' color={color}>{shares}</Typography>
                                 <Typography variant='body1' color={color} >shares</Typography>
                             </Box>
                         </Box>
                         <Box display='flex' sx={{ gap: 1 }}>
                             <Button color='error' variant='outlined' size='small' sx={{ minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
+                                if (shares-intent<0)return
                                 setShares(state => state - 1)
                                 setCash(state => state + currentPrice * 1)
                             }}>
@@ -215,6 +151,8 @@ const Chart = ({ tick: { ticker, name, color, startingValue }, portfolio, cash, 
                             </Button>
                             <OutlinedInput value={intent} onChange={(e) => setIntent(e.target.value)} inputProps={{ style: { padding: '5px', width: '40px', textAlign: 'center' } }} sx={{ padding: '0px', height: '40px' }}></OutlinedInput>
                             <Button color='success' variant='outlined' size='small' sx={{ minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
+                                let tot = intent * currentPrice
+                                if (tot > cash) return
                                 setShares(state => state + 1)
                                 const avg = ((avgCost * shares) + (currentPrice * 1)) / (shares + 1)
                                 setAvgCost(Number(avg))
