@@ -1,6 +1,6 @@
-import User from '../models/userModel.js'
-import asyncHandler from 'express-async-handler'
-import generateToken from '../utils/generateToken.js'
+const User = require('../models/userModel.js')
+const asyncHandler = require('express-async-handler')
+const generateToken = require('../utils/generateToken.js')
 
 // @desc        Authenticate user
 // @route       POST /api/users/login
@@ -31,13 +31,15 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('User already exists')
     }
     const newUser = await User.create({
-        name, email, password
+        name, email, password, wallet:0
     })
     if (newUser) {
+        console.log('CREATED: ',newUser)
         res.status(201).json({
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
+            wallet: newUser.wallet,
             isAdmin: newUser.isAdmin,
             token: generateToken(newUser._id)
         })
@@ -46,4 +48,4 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('Invalid user data')
     }
 })
-export { authUser, registerUser }
+module.exports= { authUser, registerUser }
