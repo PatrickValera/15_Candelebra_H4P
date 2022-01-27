@@ -1,8 +1,18 @@
 const express = require('express')
+const cors = require('cors')
 let path = require('path')
+const http = require('http')
+const {Server} = require('socket.io')
 
-// CONFIG APP AND DB
-const app = express()
+// EXPRESS AND SOCKETIO IO
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+// EXPRESS CONFIG
+app.use(express.json({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
+app.use(cors());
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '/../frontend/build')))
@@ -15,4 +25,6 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-app.listen(process.env.PORT || 5000, console.log(`SERVER IS RUNNING ON PORT ${process.env.PORT||5000}`))
+//EXPRESS ROUTES
+
+server.listen(process.env.PORT || 5000, console.log(`SERVER IS RUNNING ON PORT ${process.env.PORT||5000}`))
