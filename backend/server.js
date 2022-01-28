@@ -9,6 +9,7 @@ const connectDb = require('./config/dataBase.js')
 //ROUTE IMPORTS
 const userRoutes = require('./routes/userRoutes.js')
 const stockRoutes = require('./routes/stockRoutes.js')
+const transactionRoutes = require('./routes/transactionRoutes.js')
 
 // EXPRESS AND SOCKETIO IO
 const app = express();
@@ -32,6 +33,7 @@ app.use(cors());
 //EXPRESS ROUTES
 app.use('/api/users',userRoutes)
 app.use('/api/stock',stockRoutes)
+app.use('/api/transaction',transactionRoutes)
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '/../frontend/build')))

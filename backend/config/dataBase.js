@@ -83,7 +83,7 @@ const delay = async (ms) => {
         
         // console.log(stockTicker,newData)
         // console.log(stockTicker,keys.length)
-        console.log(stockTicker,price.toFixed(2))
+        // console.log(stockTicker,price.toFixed(2))
 
 
         await Stock.findOneAndUpdate({ _id: stockId }, { currentPrice: price,data:newData })
