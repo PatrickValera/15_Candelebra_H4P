@@ -5,97 +5,140 @@ import { toLocale, getColor } from '../utils'
 import ChartContainer from './ChartContainer';
 import { darken, lighten } from '@mui/material/styles'
 import { theme } from '../themes/theme'
+import { Socket } from 'socket.io-client';
 
-const Chart = ({ news,tick: { ticker, name, color, startingValue }, portfolio, cash, setPortfolio, setCash }) => {
+const Chart = ({ socket, tick: { ticker, name, color, initialPrice, data: dataFromServer, currentPrice: curr }, portfolio, cash, setPortfolio, setCash }) => {
     const [intent, setIntent] = useState(1)
     const [avgCost, setAvgCost] = useState(0)
     const [shares, setShares] = useState(0)
     const [day, setDay] = useState(0)
     const [data, setData] = useState([])
-    const [target, setTarget] = useState(startingValue + .6 * startingValue)
+    const [target, setTarget] = useState(initialPrice + .6 * initialPrice)
     const [volatility, setVolatility] = useState(2)
-    const [currentPrice, setCurrentPrice] = useState(startingValue)
+    const [currentPrice, setCurrentPrice] = useState(0)
     const [range, setRange] = useState('max')
     const [play, setPlay] = useState(true)
     const [max, setMax] = useState(0)
+    const [dataFilled, setDataFilled] = useState(false)
 
-    const handleRangeChange = (e) => {
-        // console.log(e.target.value)
-        if (e.target.value === 'max') setRange('max')
-        else setRange(Number(e.target.value))
-    }
-    const handleClick = () => {
-        setDay(state => state + 1)
-    }
+    // const handleRangeChange = (e) => {
+    //     // console.log(e.target.value)
+    //     if (e.target.value === 'max') setRange('max')
+    //     else setRange(Number(e.target.value))
+    // }
+    // const handleClick = () => {
+    //     setDay(state => state + 1)
+    // }
 
-    const handleNews = (news) => {
-        // console.log(news)
-        if (Math.random() > news.chance) {
-            // console.log('News did not pass', news.desc)
-            return
-        } else {
-            // console.log('News pass', news.desc)
-            let posTarget = Number(target) + news.target
-            let posVol = Number(volatility) + news.vlty
-            if (posTarget > 100) {
-                setTarget(posTarget)
-                setCurrentPrice(state => state + news.init)
-            }
-            if (posVol > 1 && posVol < 10) setVolatility(posVol)
-            return
-        }
-    }
-    useEffect(() => {
-        // console.log('setting Interval')
-        const interval = setInterval(() => {
-            if (play) handleClick()
-        }, 300);
-        //200 back
-        const Newsinterval = setInterval(() => {
-            let ran = Math.ceil((Math.random() * news.length)) - 1
-            // if (play) console.log(ran)
-            if (play) handleNews(news[ran])
-        }, 1000);
-        return () => {
-            // console.log('cleaning up intervals')
-            clearInterval(interval);
-            clearInterval(Newsinterval)
-        }
-    }, [play])
+    // const handleNews = (news) => {
+    //     // console.log(news)
+    //     if (Math.random() > news.chance) {
+    //         // console.log('News did not pass', news.desc)
+    //         return
+    //     } else {
+    //         // console.log('News pass', news.desc)
+    //         let posTarget = Number(target) + news.target
+    //         let posVol = Number(volatility) + news.vlty
+    //         if (posTarget > 100) {
+    //             setTarget(posTarget)
+    //             setCurrentPrice(state => state + news.init)
+    //         }
+    //         if (posVol > 1 && posVol < 10) setVolatility(posVol)
+    //         return
+    //     }
+    // }
+    // useEffect(() => {
+    //     // console.log('setting Interval')
+    //     const interval = setInterval(() => {
+    //         if (play) handleClick()
+    //     }, 300);
+    //     //200 back
+    //     const Newsinterval = setInterval(() => {
+    //         let ran = Math.ceil((Math.random() * news.length)) - 1
+    //         // if (play) console.log(ran)
+    //         if (play) handleNews(news[ran])
+    //     }, 1000);
+    //     return () => {
+    //         // console.log('cleaning up intervals')
+    //         clearInterval(interval);
+    //         clearInterval(Newsinterval)
+    //     }
+    // }, [play])
 
     //RUN THIS EVERY TICK
+    // useEffect(() => {
+
+
+    //     //CALCULATE NEW PRICE HERE
+    //     const percent = ((target - currentPrice) / target) * 100
+    //     // console.log(percent.toFixed(2), "% away from target")
+
+    //     const aNum = Math.random() * 100
+
+    //     let multiplier
+    //     if (percent + 20 > aNum) {
+    //         multiplier = 1
+    //     } else {
+    //         multiplier = -1
+    //     }
+    //     const deltaPercent = (Math.random() * volatility) / 100
+
+    //     const newPrice = (currentPrice + currentPrice * deltaPercent * multiplier)
+    //     //END CALCULATE NEW PRICE HERE
+
+    //     //CALCULATE NEW PORTFOLIO VALUE
+    //     let newObj = { ...portfolio }
+    //     newObj[ticker] = { value: newPrice * shares, shares: shares, avgCost: avgCost }
+    //     setPortfolio(newObj)
+    //     //END CALCULATE NEW PORTFOLIO VALUE
+
+    //     setCurrentPrice(newPrice)
+    //     const obj = { name: day, uv: newPrice, pv: 2400, amt: 2400 }
+    //     setData(state => [...state, obj])
+    // }, [day]);
+    // const mock = [{ name: 1, uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 100, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }]
+
+    const modifyData = (tickData) => {
+
+    }
     useEffect(() => {
+        console.log('in ui')
+        let ar = Object.values(dataFromServer)
+        setData(ar)
+        setDataFilled(true)
+        // console.log('dataFromServer:',dataFromServer)
+    }, [dataFromServer])
+    useEffect(() => {
+        socket.current.on(ticker, (tickData) => {
+            setCurrentPrice(Number(tickData))
+           
+        })
+    }, [dataFilled])
+    useEffect(()=>{
+        if(dataFilled){
+            let arr = [...data]
+            console.log('ARR', arr)
+            let obj = arr.reduceRight((a,v)=>({ ...a, [v.name]: v}), {}) 
+            // let obj = Object.assign({}, arr); // {0:"a", 1:"b", 2:"c"}
+            let keys = Object.keys(obj)
 
+            let newIndex = Number(keys[keys.length-1])+1
+            // newIndex++
+            console.log('Index: ',newIndex)
+            let letNewName=Number(obj[keys[keys.length-1]].name)+1
+            // letNewName++
+            console.log('Name: ',letNewName)
+            let objInsert = { name: letNewName, uv: Number(Number(currentPrice).toFixed(2)), pv: 2400, amt: 2400 }
+            if (keys.length >= 1000) {
+                delete obj[keys[0]]
+            }
+            obj[newIndex] = objInsert
+ 
 
-        //CALCULATE NEW PRICE HERE
-        const percent = ((target - currentPrice) / target) * 100
-        // console.log(percent.toFixed(2), "% away from target")
-
-        const aNum = Math.random() * 100
-
-        let multiplier
-        if (percent + 20 > aNum) {
-            multiplier = 1
-        } else {
-            multiplier = -1
+            let ar2 = Object.values(obj)
+            setData(ar2)
         }
-        const deltaPercent = (Math.random() * volatility) / 100
-
-        const newPrice = (currentPrice + currentPrice * deltaPercent * multiplier)
-        //END CALCULATE NEW PRICE HERE
-
-        //CALCULATE NEW PORTFOLIO VALUE
-        let newObj = { ...portfolio }
-        newObj[ticker] = { value: newPrice * shares, shares: shares, avgCost: avgCost }
-        setPortfolio(newObj)
-        //END CALCULATE NEW PORTFOLIO VALUE
-
-        setCurrentPrice(newPrice)
-        const obj = { name: day, uv: newPrice, pv: 2400, amt: 2400 }
-        setData(state => [...state, obj])
-    }, [day]);
-
-
+    },[currentPrice])
 
     return (
         <>
@@ -123,10 +166,10 @@ const Chart = ({ news,tick: { ticker, name, color, startingValue }, portfolio, c
                     {/* =====BUTTONS=============================================== */}
                     <Box display='flex' sx={{ ml: 2, gap: 1 }}>
                         {/* <Button onClick={() => setRange(28)}>7</Button> */}
-                        <Button value={28} sx={{ color: `${range === 28 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1w</Button>
-                        <Button value={120} sx={{ color: `${range === 120 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1m</Button>
-                        <Button value={360} sx={{ color: `${range === 360 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>3m</Button>
-                        <Button value={'max'} sx={{ color: `${range === 'max' ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>max</Button>
+                        {/* <Button value={28} sx={{ color: `${range === 28 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1w</Button> */}
+                        {/* <Button value={120} sx={{ color: `${range === 120 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1m</Button> */}
+                        {/* <Button value={360} sx={{ color: `${range === 360 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>3m</Button> */}
+                        {/* <Button value={'max'} sx={{ color: `${range === 'max' ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>max</Button> */}
                     </Box>
 
                     {/* =====END BUTTONS============================================= */}
@@ -143,7 +186,7 @@ const Chart = ({ news,tick: { ticker, name, color, startingValue }, portfolio, c
                         </Box>
                         <Box display='flex' sx={{ gap: 1 }}>
                             <Button color='error' variant='outlined' size='small' sx={{ minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
-                                if (shares-intent<0)return
+                                if (shares - intent < 0) return
                                 setShares(state => state - 1)
                                 setCash(state => state + currentPrice * 1)
                             }}>

@@ -32,7 +32,14 @@ const tickers = async (socket) => {
         // }
         // let allStock=[1,2,3,4,5]
         for (let i=0;i<allStocks.length;i++){
-            stockPrice(socket,allStocks[i].currentPrice,5000,allStocks[i].ticker,10,allStocks[i]._id,allStocks[i].data)
+            stockPrice(
+              socket,allStocks[i].currentPrice,
+              4000,
+              allStocks[i].ticker,
+              10,
+              allStocks[i]._id,
+              allStocks[i].data
+              )
         }
     } catch (error) {
         console.log("Stock fetching error:", error);
@@ -67,19 +74,22 @@ const delay = async (ms) => {
         }
         let keys=Object.keys(tempData)
         let newData={...tempData}
+        let obj={}
         // console.log(Number(keys[keys.length-1]))
         let newIndex=String(Number(keys[keys.length-1])+1)
-        newData[newIndex]=Number(price.toFixed(2))
-        if(keys.length>=4320)delete newData[keys[0]]
+        obj={ name: newIndex, uv: Number(price.toFixed(2)), pv: 2400, amt: 2400 }
+        newData[newIndex]=obj
+        if(keys.length>=1000)delete newData[keys[0]]
         
-        console.log(stockTicker,newData)
+        // console.log(stockTicker,newData)
         // console.log(stockTicker,keys.length)
+        console.log(stockTicker,price.toFixed(2))
 
 
-        await Stock.findOneAndUpdate({ id: stockId }, { currentPrice: price,data:newData })
-        socket.emit(stockTicker, price);
+        await Stock.findOneAndUpdate({ _id: stockId }, { currentPrice: price,data:newData })
+        // socket.emit('pan', 1111);
         tempData=newData
-        // socket.emit(stockTicker, price.toFixed(2));
+        socket.emit(stockTicker, price.toFixed(2));
         // console.log('HELLO', stockTicker)
         await delay(delayMs);
       }

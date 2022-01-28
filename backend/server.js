@@ -13,8 +13,14 @@ const stockRoutes = require('./routes/stockRoutes.js')
 // EXPRESS AND SOCKETIO IO
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
-
+const io = new Server(server,{
+    cors: {
+        origin: "http://localhost:3000",
+    },
+});
+io.on('connection', (socket) => {
+    console.log('connected')
+})
 // EXPRESS CONFIG
 dotenv.config()
 connectDb(io)

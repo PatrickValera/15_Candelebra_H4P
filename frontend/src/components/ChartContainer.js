@@ -6,32 +6,16 @@ import { toLocale } from '../utils';
 // const mock = [{ name: 1, uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 100, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }]
 
 const ChartContainer = ({ range, data, color }) => {
-    
+    useEffect(()=>{
+
+    },[data])
     return (
         <>
             <div style={{ width: '100%', height: 300 }}>
                 <ResponsiveContainer>
-                    {/* < AreaChart
-                        data={data.slice(-range)}
-                        margin={{
-                            top: 20,
-                            right: 0,
-                            left: 0,
-                            bottom: 0
-                        }
-                        }
-                    >
-                        <defs>
-                            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#129a74" stopOpacity={0.8} />
-                                <stop offset="95%" stopColor="#129a74" stopOpacity={0} />
-                            </linearGradient>
-                        </defs>
-                        <Area fillOpacity={1} fill='url(#colorUv)' type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" isAnimationActive={false} />
-                        <Tooltip content={<CustomToolTip />} />
-                    </AreaChart  > */}
+                   
                     {color &&
-                        <ComposedChart data={range==='max'?data:data.slice(-range)} margin={{ top: 25, right: 30, left: 20, bottom: 5 }}>
+                        <ComposedChart data={data.slice(-1000)} margin={{ top: 25, right: 30, left: 20, bottom: 5 }}>
                             <defs>
                                 <linearGradient id={color} x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="5%" stopColor={String(color)} stopOpacity={0.5} />

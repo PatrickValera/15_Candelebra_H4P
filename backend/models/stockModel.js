@@ -8,7 +8,9 @@ const stockSchema = mongoose.Schema({
   initialPrice: Number,
   currentPrice: Number,
   description: String,
+  color:String,
   data:Object,
+
   // ipoDate: String,
   // siteUrl: String,
   // industries: [String],
