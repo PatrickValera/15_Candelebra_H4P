@@ -38,16 +38,16 @@ const Home = () => {
   },[])
   return (
     <>
-      <Box display='flex' sx={{position:'relative', flexWrap:'wrap'}}>
+      <Box display='flex' sx={{position:'relative', flexWrap:{xs:'wrap',sm:'noWrap'}}}>
         {/* ========HEADER============================ */}
-        <Box sx={{ flex: '1 1 400px', p: 3 , order:{xs:'2',md:'1'}}}>
+        <Box sx={{ flex: '1 5 250px', p: {xs:1,md:3} , order:{xs:'2',sm:'1'}}}>
           <Box>
             <Typography variant='h1' fontWeight='700'>Stonk Market</Typography>
             <Typography variant='h5' color='grey.600'>Trending Stonks</Typography>
 
           </Box>
           {/* ========TICKERS============================ */}
-          <Box display='flex' sx={{ width: '100%', flexWrap: 'wrap', p: 1 }}>
+          <Box display='flex' sx={{ flexWrap: 'wrap', p: 1 }}>
             {socket.current&&tickers.map((tick, index) => {
               return (
               <Chart news={modifier[Math.floor(Math.random()*2)]} key={index} tick={tick} socket={socket}  setCash={setCash} cash={cash} 
@@ -57,7 +57,7 @@ const Home = () => {
           </Box>
         </Box>
         {/* ========SIDE============================ */}
-        <Box sx={{ flex: {xs:'1 1 100%',md:'0 0 300px'} , order:{xs:'1',md:'2'}}}>
+        <Box sx={{ flex: {xs:'1 1 250px',sm:'0 1 300px'} , order:{xs:'1',sm:'2'}}}>
           <PortfolioPanel socket={socket} cash={cash} portfolio={portfolio} total={total} tickers={tickers}/>
         </Box>
 
@@ -65,35 +65,5 @@ const Home = () => {
     </>
   )
 };
-// const tickers = [{
-//   ticker: 'PAN',
-//   name: 'Frying Pan',
-//   color: '#E4DD2F',
-//   startingValue: 200
-// }, {
-//   ticker: 'Oui',
-//   name: 'OuiMi Inc.',
-//   color: '#EFA051',
-//   startingValue: 150
-// }, {
-//   ticker: 'SIMP',
-//   name: 'Flepal LLC.',
-//   color: '#51A0EF',
-//   startingValue: 100
-// }, {
-//   ticker: 'ZAO',
-//   name: 'Irene Zhao',
-//   color: '#EF51A0',
-//   startingValue: 15000
-// }, {
-//   ticker: 'CYNO',
-//   name: 'CYNO Media',
-//   color: '#C548C5',
-//   startingValue: 10000
-// }, {
-//   ticker: 'AWAD',
-//   name: 'AWAD Corp.',
-//   color: '#48C5C5',
-//   startingValue: 700
-// },]
+
 export default Home;

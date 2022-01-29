@@ -11,7 +11,7 @@ const ChartContainer = ({ range, data, color }) => {
     },[data])
     return (
         <>
-            <div style={{ width: '100%', height: 300 }}>
+            <Box sx={{width:'100%',height:{xs:'300px',sm:'200px',md:'300px'}}}>
                 <ResponsiveContainer>
                    
                     {color &&
@@ -38,7 +38,7 @@ const ChartContainer = ({ range, data, color }) => {
                         </ComposedChart>}
 
                 </ResponsiveContainer>
-            </div>
+            </Box>
 
         </>
     )
@@ -47,7 +47,7 @@ const CustomToolTip = ({ active, payload, label }) => {
     return (
         <>
             {payload && payload.length && 
-            <Box sx={{bgcolor:'white',p:2,borderRadius:1,border:'1px solid #ddd'}}>
+            <Box sx={{bgcolor:'white',p:1,borderRadius:1,border:'1px solid #ddd'}}>
                 {/* <Typography variant='body2'>{label}</Typography> */}
                 <Typography variant='body2' color='success.light'>${toLocale(payload[0].value)}</Typography>
             </Box>

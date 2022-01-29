@@ -24,7 +24,7 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
     const [dataFilled, setDataFilled] = useState(false)
     const [requestLoading,setRequestLoading]=useState(false)
 
-    const {shares}=useSelector(state=>state.userPortfolio.portfolio[_id])
+    const ss=useSelector(state=>state.userPortfolio.portfolio[_id])
     const {loading}=useSelector(state=>state.userPortfolio)
     const dispatch = useDispatch()
 
@@ -37,9 +37,11 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
         setIntent(e.target.value)
     }
     useEffect(()=>{
-        console.log(shares)
-        setCurrentShares(shares)
-    },[shares])
+        if(ss){
+            console.log(ss.shares)
+        setCurrentShares(ss.shares)
+    }
+    },[ss])
     useEffect(()=>{
         setRequestLoading(loading)
     },[loading])
@@ -91,7 +93,7 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
 
     return (
         <>
-            <Box sx={{ p: 2, width: { xs: '100%', md: '50%' }, }}>
+            <Box sx={{ p: 1, width: { sm: '100%', md: '50%' }, }}>
                 <Paper elevation={4} sx={{ display: 'flex', p: 1, flexDirection: 'column' }} >
                     {/* =====HEADER============================================== */}
                     <Box>
@@ -107,7 +109,7 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                     {/* <LineChart width={600} height={300} data={data.slice(-range)}> */}
                     {/* <Line type="monotone" dataKey="uv" stroke="#8884d8" isAnimationActive={false} dot={false}/> */}
                     {/* </LineChart> */}
-                    <Box display='block' sx={{}}>
+                    <Box>
                         <ChartContainer data={data} range={range} color={color} />
                     </Box>
                     {/* =====END CHART=============================================== */}
@@ -115,10 +117,10 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                     {/* =====RANGE BUTTONS=============================================== */}
                     <Box display='flex' sx={{ ml: 2, gap: 1 }}>
                         {/* <Button onClick={() => setRange(28)}>7</Button> */}
-                        <Button value={50} sx={{ color: `${range === 28 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1w</Button>
-                        <Button value={350} sx={{ color: `${range === 120 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1m</Button>
-                        <Button value={700} sx={{ color: `${range === 360 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>3m</Button>
-                        <Button value={1000} sx={{ color: `${range === 'max' ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>max</Button>
+                        <Button value={60} sx={{ color: `${range === 60 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>5m</Button>
+                        <Button value={360} sx={{ color: `${range === 360 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>30m</Button>
+                        <Button value={720} sx={{ color: `${range === 720 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1h</Button>
+                        <Button value={1000} sx={{ color: `${range === 1000 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1h20m</Button>
                     </Box>
 
                     {/* =====END RANGE BUTTONS============================================= */}
@@ -129,13 +131,13 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                     <Box display='flex' sx={{ alignItems: 'center', px: 2 }}>
                         <Box sx={{ flexGrow: '1' }}>
                             <Box display='flex' sx={{ width: 'min-content', p: 1, gap: 1, borderRadius: 2, alignItems: 'flex-end', bgcolor: lighten(getColor(color), .8) }}>
-                                <Typography variant='h4' color={color}>{currentShares}</Typography>
+                                <Typography variant='h4' color={color}>{currentShares?currentShares:0}</Typography>
                                 <Typography variant='body1' color={color} >shares</Typography>
                             </Box>
                         </Box>
                         <Box display='flex' sx={{ gap: 1 }}>
                             <Button disabled={requestLoading} color='error' variant='outlined' size='small' sx={{ minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
-                                if (shares - intent < 0) return
+                                if (currentShares - intent < 0) return
                                 dispatch(sendOrder('sell', _id, intent))
                             }}>
                                 Sell

@@ -29,7 +29,8 @@ const Bar = ({ socket,share:id }) => {
             {share.shares>0&&
                 <Paper elevation={0} sx={{ my:1,p:1, bgcolor: lighten(getColor(color), .8), display: 'flex' }}>
                     <Box sx={{flex:'1 1 auto'}}>
-                    <Typography variant='h6'color={color}>{share.ticker}  {share.shares}</Typography>
+                    <Typography variant='h6'color={color}>{share.ticker}</Typography>
+                    <Typography varaint='body2' color={color}>{share.shares} {share.shares>1?'shares':'share'}</Typography>
                     </Box>
                     <Box>
                         <Typography varaint='body1'>${toLocale(share.shares*currentPrice)}</Typography>
