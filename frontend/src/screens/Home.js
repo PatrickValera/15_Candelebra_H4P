@@ -12,7 +12,7 @@ const Home = () => {
   const [total, setTotal] = useState(0)
   const [cash, setCash] = useState(10000)
   const socket=useRef()
-  // const [portfolio, setPortfolio] = useState({})
+  const [portfolio, setPortfolio] = useState({})
 
   // useEffect(()=>{
   //     let tot=0
@@ -29,18 +29,18 @@ const Home = () => {
   const fetchData=async()=>{
     const {data}=await axios.get('/api/stock')
     setTickers(data)
-    // console.log(data)
+    console.log(data)
   }
   useEffect(()=>{
     fetchData()
     socket.current = io(window.location.pathname);
-    console.log(socket.current)
+    // console.log(socket.current)
   },[])
   return (
     <>
-      <Box display='flex' sx={{position:'relative'}}>
+      <Box display='flex' sx={{position:'relative', flexWrap:'wrap'}}>
         {/* ========HEADER============================ */}
-        <Box sx={{ flex: '1 1 200px', p: 3 }}>
+        <Box sx={{ flex: '1 1 400px', p: 3 , order:{xs:'2',md:'1'}}}>
           <Box>
             <Typography variant='h1' fontWeight='700'>Stonk Market</Typography>
             <Typography variant='h5' color='grey.600'>Trending Stonks</Typography>
@@ -57,8 +57,8 @@ const Home = () => {
           </Box>
         </Box>
         {/* ========SIDE============================ */}
-        <Box sx={{ flex: '0 0 300px' }}>
-          {/* <PortfolioPanel cash={cash} portfolio={portfolio} total={total} tickers={tickers}/> */}
+        <Box sx={{ flex: {xs:'1 1 100%',md:'0 0 300px'} , order:{xs:'1',md:'2'}}}>
+          <PortfolioPanel socket={socket} cash={cash} portfolio={portfolio} total={total} tickers={tickers}/>
         </Box>
 
       </Box>

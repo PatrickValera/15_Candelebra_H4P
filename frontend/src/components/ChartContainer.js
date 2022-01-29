@@ -15,7 +15,7 @@ const ChartContainer = ({ range, data, color }) => {
                 <ResponsiveContainer>
                    
                     {color &&
-                        <ComposedChart data={data.slice(-1000)} margin={{ top: 25, right: 30, left: 20, bottom: 5 }}>
+                        <ComposedChart data={data.slice(-range)} margin={{ top: 25, right: 30, left: 20, bottom: 5 }}>
                             <defs>
                                 <linearGradient id={color} x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="5%" stopColor={String(color)} stopOpacity={0.5} />

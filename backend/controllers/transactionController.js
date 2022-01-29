@@ -10,7 +10,11 @@ const getPortfolio = asyncHandler(async(req,res)=>{
 
     const user = await User.findById(req.user._id)
     if(user){
-        res.json(user.portfolio)
+        console.log(user.portfolio)
+        res.json({
+            portfolio:user.portfolio,
+            wallet:user.wallet,
+        })
     }else{
         throw new Error('USER NOT FOUND')
     }
@@ -20,6 +24,7 @@ const getPortfolio = asyncHandler(async(req,res)=>{
 // @access      Private
 
 const buyStock = asyncHandler(async (req, res) => {
+    console.log('BUYING')
     const { stockId, shares } = req.body
     // console.log(req.user._id)
     // console.log(stockId,"  ",shares)
@@ -31,18 +36,19 @@ const buyStock = asyncHandler(async (req, res) => {
             throw new Error('Not enough coins')
         } else {
             user.wallet -= shares * stock.currentPrice
-            let prevShares = user.portfolio[stock._id].shares
-            let prevAverage = user.portfolio[stock._id].averageCost
-            if (!prevShares) {
-                prevShares = 0
-                prevAverage = 0
-            }
+            let prevShares =( user.portfolio[stock._id]?user.portfolio[stock._id].shares:0)
+            let prevAverage = (user.portfolio[stock._id]?user.portfolio[stock._id].averageCost:0)
+            // if (!prevShares) {
+            //     prevShares = 0
+            //     prevAverage = 0
+            // }
             let obj = { ...user.portfolio }
             const avg = ((prevAverage * prevShares) + (stock.currentPrice * shares)) / (prevShares + shares)
 
             obj[stock._id.toString()] = {
                 shares: prevShares + shares,
-                averageCost: avg
+                averageCost: avg,
+                ticker:stock.ticker
             }
             user.portfolio = { ...obj }
             user.save()
@@ -61,6 +67,7 @@ const buyStock = asyncHandler(async (req, res) => {
 // @access      Private
 
 const sellStock = asyncHandler(async (req, res) => {
+    console.log('SELLING')
     const { stockId, shares:shareToSell } = req.body
     const stock = await Stock.findById(stockId)
     const user = await User.findById(req.user._id)
@@ -83,7 +90,8 @@ const sellStock = asyncHandler(async (req, res) => {
             }
             obj[stock._id.toString()] = {
                 shares: newShares,
-                averageCost: newAvg
+                averageCost: newAvg,
+                ticker:stock.ticker
             }
             user.portfolio = { ...obj }
             user.save()

@@ -11,7 +11,7 @@ connectDB(null)
 const importData=async()=>{
     try{
         console.log(stocks)
-        await Stocks.deleteMany()
+        // await Stocks.deleteMany()
 
         // await Stocks.insertMany([{
         //     ticker: 'CYNO',

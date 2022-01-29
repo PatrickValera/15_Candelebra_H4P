@@ -34,7 +34,7 @@ const tickers = async (socket) => {
         for (let i=0;i<allStocks.length;i++){
             stockPrice(
               socket,allStocks[i].currentPrice,
-              4000,
+              5000,
               allStocks[i].ticker,
               10,
               allStocks[i]._id,
