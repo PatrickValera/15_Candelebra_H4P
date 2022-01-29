@@ -3,15 +3,18 @@
 - LIVE DEMO: https://candelebra.herokuapp.com/
 
 ### Description
-- Candelebra is stock simulator.
-- Worked on this for 3 days. Idk what to put on here XD.
-- Its all frontend no backend
+- Candelebra is a fullstack stock simulator.
+
 
 ### Tech Stack
 - HTML/CSS/JS
 - React
 - Material UI
 - Recharts
+- MongoDB
+- Node/Express
+- Redux
+- SocketIO
 
 
 
