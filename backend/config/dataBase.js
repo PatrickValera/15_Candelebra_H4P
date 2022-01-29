@@ -34,7 +34,7 @@ const tickers = async (socket) => {
         for (let i=0;i<allStocks.length;i++){
             stockPrice(
               socket,allStocks[i].currentPrice,
-              5000,
+              1000,
               allStocks[i].ticker,
               10,
               allStocks[i]._id,
@@ -61,17 +61,27 @@ const delay = async (ms) => {
       let price = currPrice;
       let tempData=data
       while (1) {
+        if(Math.floor(Math.random()*100<1)){
+          price+=80
+          console.log('up spike: ',stockTicker)
+        }
+        if(Math.floor(Math.random()*100)<1&&price>1000&&price<2000){
+          price-=200
+          console.log('down spike: ',stockTicker)
+        }
       let up = Math.round(Math.random());
+    
         if (up) {
-          price += Math.random() * 10;
+          price += Math.random() * price*.03;
           up = false;
         } else {
-          price -= Math.random() * 10;
+          price -= Math.random() * price*.03;
           up = true;
         }
-        if (price < 0) {
-          price = 0;
+        if (price <= 0) {
+          price = 1;
         }
+     
         let keys=Object.keys(tempData)
         let newData={...tempData}
         let obj={}

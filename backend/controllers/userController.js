@@ -7,7 +7,6 @@ const generateToken = require('../utils/generateToken.js')
 // @access      Public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
-    console.log(email)
     const user = await User.findOne({ email: email })
     if (user && (await user.matchPassword(password))) {
         res.json({
@@ -15,9 +14,10 @@ const authUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            icon:user.icon,
+            wallet:user.wallet,
             token: generateToken(user._id)
         })
+        console.log('logged in as ',user.email)
     } else {
         res.status(401)
         throw new Error('Invalid email or password')
@@ -31,7 +31,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('User already exists')
     }
     const newUser = await User.create({
-        name, email, password, wallet:0
+        name, email, password, 
     })
     if (newUser) {
         console.log('CREATED: ',newUser)
@@ -39,7 +39,7 @@ const registerUser = asyncHandler(async (req, res) => {
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
-            wallet: newUser.wallet,
+            // wallet: newUser.wallet,
             isAdmin: newUser.isAdmin,
             token: generateToken(newUser._id)
         })

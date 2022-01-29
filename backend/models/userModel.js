@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
+    // required: true,
     // match: [/^[a-zA-Z\s]*$/]
   },
   email: {
@@ -21,7 +21,8 @@ const userSchema = mongoose.Schema({
   wallet: {
     type: Number,
     required: true,
-    min: 0
+    default:20000,
+    // min: 0
   },
   isAdmin:{
     type: Boolean,

@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { login } from '../state/actions/userActions';
 import {useNavigate} from 'react-router-dom'
@@ -13,13 +13,14 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         setError('')
         dispatch(login(email, password))
     }
     const loadDemo = () => {
-        setEmail('sampleuser@email.com')
-        setPassword('pooplol')
+        setEmail('admin0715@example.com')
+        setPassword('adminpass')
     }
     useEffect(() => {
         if (userInfo) {
@@ -33,6 +34,7 @@ const Login = () => {
     return (
         <Container maxWidth='xs' sx={{display:'flex',alignItems:'center',minHeight:'90vh'}}>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Typography color='error' variant='body1'>{error&&error}</Typography>
                 <TextField
                     margin="normal"
                     required

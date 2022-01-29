@@ -97,6 +97,7 @@ const PortfolioPanel = ({ socket, cash, total: totalInvestment, tickers }) => {
                     </Box>
                 </> :
                 <Button size='medium' variant='contained' onClick={() => navigate('/user/login')}>Login</Button>}
+                <Button size='medium' variant='text' onClick={() => navigate('/user/register')}>Register</Button>
         </Box>
     )
 

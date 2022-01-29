@@ -12,6 +12,7 @@ export const login = (email,password)=>async(dispatch)=>{
             }
         }
         const {data}=await axios.post('/api/users/login',{email,password},config)
+        console.log(data)
         dispatch({
             type:USER_LOGIN_SUCCESS,
             payload:data
@@ -34,7 +35,7 @@ export const logout=()=>async(dispatch)=>{
         console.log(err)
     }
 }
-export const register = (email,password,name)=>async(dispatch)=>{
+export const register = (email,password)=>async(dispatch)=>{
     try{
         dispatch({
             type:USER_REGISTER_REQUEST
@@ -44,7 +45,7 @@ export const register = (email,password,name)=>async(dispatch)=>{
                 'Content-Type': 'application/json'
             }
         }
-        const {data}=await axios.post('/api/users/register',{email,password,name},config)
+        const {data}=await axios.post('/api/users/',{email,password},config)
         dispatch({
             type:USER_REGISTER_SUCCESS,
             payload:data
