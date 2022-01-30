@@ -14,16 +14,19 @@ const Bar = ({ socket,share:id }) => {
       setPercent(((share.shares*currentPrice - (share.shares * share.averageCost)) / (share.shares * share.averageCost)) * 100)
     },[currentPrice,share])
     useEffect(()=>{
-        console.log('share count changed ',share.ticker)
+        // console.log('share count changed ',share.ticker)
     },[share])
     useEffect(() => {
         // console.log(share)
-        socket.current.on(share.ticker, (tickData) => {
-            setCurrentPrice(Number(tickData))
+        let mounted=true
+        if(socket.current)socket.current.on(share.ticker, (tickData) => {
+            if(mounted)setCurrentPrice(Number(tickData))
             // console.log(tickData)
-           
+        return(()=>{
+            mounted=false
         })
-    }, [share])
+        })
+    }, [socket,share])
     return (
         <>
             {share.shares>0&&
@@ -33,7 +36,7 @@ const Bar = ({ socket,share:id }) => {
                     <Typography varaint='body2' color={color}>{share.shares} {share.shares>1?'shares':'share'}</Typography>
                     </Box>
                     <Box>
-                        <Typography varaint='body1'>${toLocale(share.shares*currentPrice)}</Typography>
+                        <Typography varaint='body1'color='primary'>${toLocale(share.shares*currentPrice)}</Typography>
                         <Typography varaint='body1' fontWeight={600} color={percent>0?'green':'error'}>{toLocale(percent)}%</Typography>
                     </Box>
 

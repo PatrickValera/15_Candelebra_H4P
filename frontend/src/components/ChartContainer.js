@@ -20,7 +20,7 @@ const ChartContainer = ({ range, data, color }) => {
                                 <linearGradient id={color} x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="5%" stopColor={String(color)} stopOpacity={0.5} />
                                     <stop offset="60%" stopColor={String(color)} stopOpacity={0.15} />
-                                    <stop offset="95%" stopColor="#fff" stopOpacity={0.1} />
+                                    <stop offset="95%" stopColor="#666" stopOpacity={0.1} />
                                 </linearGradient>
                             </defs>
                             <Tooltip content={<CustomToolTip />} />

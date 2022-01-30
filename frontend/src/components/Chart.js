@@ -1,57 +1,54 @@
 import { Box, Button, Divider, FormControl, InputLabel, MenuItem, OutlinedInput, Paper, Select, Tab, Tabs, Typography } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { toLocale, getColor } from '../utils'
 import ChartContainer from './ChartContainer';
 import { darken, lighten } from '@mui/material/styles'
 import { theme } from '../themes/theme'
-import { Socket } from 'socket.io-client';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     sendOrder
 } from '../state/actions/portfolioActions';
+import { ThemeContext } from '@emotion/react';
+// import { ThemeContext } from '@emotion/react';
+// const mock = [{ name: 1, uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 100, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }]
+
 const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: dataFromServer, currentPrice: curr }, portfolio, cash, setPortfolio, setCash }) => {
     const [intent, setIntent] = useState(1)
-    const [avgCost, setAvgCost] = useState(0)
     const [currentShares, setCurrentShares] = useState(0)
     const [data, setData] = useState([])
-    const [target, setTarget] = useState(initialPrice + .6 * initialPrice)
-    const [volatility, setVolatility] = useState(2)
     const [currentPrice, setCurrentPrice] = useState(0)
-    const [range, setRange] = useState('max')
-    const [play, setPlay] = useState(true)
-    const [max, setMax] = useState(0)
+    const [range, setRange] = useState(1000)
+    // const [play, setPlay] = useState(true)
+    // const [max, setMax] = useState(0)
     const [dataFilled, setDataFilled] = useState(false)
-    const [requestLoading,setRequestLoading]=useState(false)
+    const [requestLoading, setRequestLoading] = useState(false)
 
-    const ss=useSelector(state=>state.userPortfolio.portfolio[_id])
-    const {loading}=useSelector(state=>state.userPortfolio)
+    const theme = useContext(ThemeContext)
+
+    const ss = useSelector(state => state.userPortfolio.portfolio[_id])
+    const { loading } = useSelector(state => state.userPortfolio)
     const dispatch = useDispatch()
 
     const handleRangeChange = (e) => {
-        // console.log(e.target.value)
         if (e.target.value === 'max') setRange('max')
         else setRange(Number(e.target.value))
     }
     const handleIntentChange = (e) => {
         setIntent(e.target.value)
     }
-    useEffect(()=>{
-        if(ss){
-            console.log(ss.shares)
-        setCurrentShares(ss.shares)
-    }
-    },[ss])
-    useEffect(()=>{
+
+    useEffect(() => {
+        if (ss) {
+            // console.log(ss.shares)
+            setCurrentShares(ss.shares)
+        }
+    }, [ss])
+
+    useEffect(() => {
         setRequestLoading(loading)
-    },[loading])
+    }, [loading])
 
-
-    // const mock = [{ name: 1, uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 100, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }]
-
-    const modifyData = (tickData) => {
-
-    }
     useEffect(() => {
         // console.log('in ui')
         let ar = Object.values(dataFromServer)
@@ -59,32 +56,32 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
         setDataFilled(true)
         // console.log('dataFromServer:',dataFromServer)
     }, [dataFromServer])
-    useEffect(() => {
-        socket.current.on(ticker, (tickData) => {
-            setCurrentPrice(Number(tickData))
 
+    useEffect(() => {
+        let mounted = true
+        socket.current.on(ticker, (tickData) => {
+            if (mounted) setCurrentPrice(Number(tickData))
+        })
+        return (() => {
+            mounted = false
         })
     }, [dataFilled])
+
     useEffect(() => {
         if (dataFilled) {
             let arr = [...data]
-            // console.log('ARR', arr)
             let obj = arr.reduceRight((a, v) => ({ ...a, [v.name]: v }), {})
-            // let obj = Object.assign({}, arr); // {0:"a", 1:"b", 2:"c"}
             let keys = Object.keys(obj)
 
             let newIndex = Number(keys[keys.length - 1]) + 1
-            // newIndex++
             // console.log('Index: ',newIndex)
             let letNewName = Number(obj[keys[keys.length - 1]].name) + 1
-            // letNewName++
             // console.log('Name: ',letNewName)
             let objInsert = { name: letNewName, uv: Number(Number(currentPrice).toFixed(2)), pv: 2400, amt: 2400 }
             if (keys.length >= 1000) {
                 delete obj[keys[0]]
             }
             obj[newIndex] = objInsert
-
 
             let ar2 = Object.values(obj)
             setData(ar2)
@@ -99,16 +96,11 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                     <Box>
                         <Typography variant='h3' color={color} fontWeight='600'>{ticker}</Typography>
                         <Typography variant='body1' color='grey.400'>{name}</Typography>
-                        <Typography variant='h6' color='green' fontWeight='600'>${toLocale(currentPrice)}</Typography>
-                        {/* <Typography variant='body1' color='success'>TARGET: ${target}</Typography> */}
-                        {/* <Typography variant='body1' color='success'>volatility: {volatility}</Typography> */}
+                        <Typography variant='h6' color='success.main' fontWeight='600'>${toLocale(currentPrice)}</Typography>
                     </Box>
                     {/* =====HEADER============================================== */}
 
                     {/* =====CHART=============================================== */}
-                    {/* <LineChart width={600} height={300} data={data.slice(-range)}> */}
-                    {/* <Line type="monotone" dataKey="uv" stroke="#8884d8" isAnimationActive={false} dot={false}/> */}
-                    {/* </LineChart> */}
                     <Box>
                         <ChartContainer data={data} range={range} color={color} />
                     </Box>
@@ -117,10 +109,10 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                     {/* =====RANGE BUTTONS=============================================== */}
                     <Box display='flex' sx={{ ml: 2, gap: 1 }}>
                         {/* <Button onClick={() => setRange(28)}>7</Button> */}
-                        <Button value={60} sx={{ color: `${range === 60 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>5m</Button>
-                        <Button value={360} sx={{ color: `${range === 360 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>30m</Button>
-                        <Button value={720} sx={{ color: `${range === 720 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1h</Button>
-                        <Button value={1000} sx={{ color: `${range === 1000 ? color : '#444'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1h20m</Button>
+                        <Button value={60} sx={{ color: `${range === 60 ? color : 'text.primary'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>5m</Button>
+                        <Button value={360} sx={{ color: `${range === 360 ? color : 'text.primary'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>30m</Button>
+                        <Button value={720} sx={{ color: `${range === 720 ? color : 'text.primary'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1h</Button>
+                        <Button value={1000} sx={{ color: `${range === 1000 ? color : 'text.primary'}`, minWidth: '45px', p: '0' }} onClick={handleRangeChange}>1h20m</Button>
                     </Box>
 
                     {/* =====END RANGE BUTTONS============================================= */}
@@ -130,13 +122,13 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                     {/* =====BUY BUTTONS=============================================== */}
                     <Box display='flex' sx={{ alignItems: 'center', px: 2 }}>
                         <Box sx={{ flexGrow: '1' }}>
-                            <Box display='flex' sx={{ width: 'min-content', p: 1, gap: 1, borderRadius: 2, alignItems: 'flex-end', bgcolor: lighten(getColor(color), .8) }}>
-                                <Typography variant='h4' color={color}>{currentShares?currentShares:0}</Typography>
+                            <Box display='flex' sx={{ width: 'min-content', p: 1, gap: 1, borderRadius: 2, alignItems: 'flex-end', bgcolor: `${theme.palette.mode === 'light' && lighten(getColor(color), .8)}` }}>
+                                <Typography variant='h4' color={color}>{currentShares ? currentShares : 0}</Typography>
                                 <Typography variant='body1' color={color} >shares</Typography>
                             </Box>
                         </Box>
                         <Box display='flex' sx={{ gap: 1 }}>
-                            <Button disabled={requestLoading} color='error' variant='outlined' size='small' sx={{ minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
+                            <Button disabled={requestLoading || currentShares === 0} color='error' variant={theme.palette.mode === 'dark' ? 'contained' : 'outlined'} size='small' sx={{ fontWeight: '600', minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
                                 if (currentShares - intent < 0) return
                                 dispatch(sendOrder('sell', _id, intent))
                             }}>
@@ -160,22 +152,12 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                                     <MenuItem value={100}>100</MenuItem>
                                 </Select>
                             </FormControl>
-                            <Button disabled={requestLoading} color='success' variant='outlined' size='small' sx={{ minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
+                            <Button disabled={requestLoading} color='success' variant={theme.palette.mode === 'dark' ? 'contained' : 'outlined'} size='small' sx={{ minWidth: '40px', p: '5px 10px', flexGrow: '1' }} onClick={() => {
                                 dispatch(sendOrder('buy', _id, intent))
                             }}>
                                 Buy
                             </Button>
                         </Box>
-                        {/* <input type='number' value={target} onChange={(e) => setTarget(e.target.value)} /> */}
-                        {/* <Button onClick={() => handleNews(news[4])}>PUSH NEWS</Button> */}
-                        {/* <Button onClick={() => setPlay(state => !state)}>Play/Stop</Button> */}
-
-                        {/* <Button onClick={() => setVolatility(state => state + 1)}>Increase volatility</Button>
-            <Button onClick={() => setVolatility(state => state - 1)}>Decrease volatility</Button> */}
-
-                        {/* <Typography variant='body1'>AVG PRICE: ${((avgCost).toLocaleString())}</Typography>
-                        <Typography variant='body1'>POSITION: ${(shares * currentPrice).toFixed(2)}</Typography>
-                        <Typography variant='body1'>PROFIT/LOSS: ${((shares * currentPrice) - (shares * avgCost)).toLocaleString()}</Typography> */}
                     </Box>
 
                 </Paper>

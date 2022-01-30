@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 
 const Home = () => {
   // console.log(modifier)
-  const [tickers,setTickers]=useState([])
+  const [tickers,setTickers]=useState(null)
   const [total, setTotal] = useState(0)
   const [cash, setCash] = useState(10000)
   const socket=useRef()
@@ -48,12 +48,12 @@ const Home = () => {
           </Box>
           {/* ========TICKERS============================ */}
           <Box display='flex' sx={{ flexWrap: 'wrap', p: 1 }}>
-            {socket.current&&tickers.map((tick, index) => {
+            {tickers?socket.current&&tickers.map((tick, index) => {
               return (
               <Chart news={modifier[Math.floor(Math.random()*2)]} key={index} tick={tick} socket={socket}  setCash={setCash} cash={cash} 
               // portfolio={portfolio} setPortfolio={setPortfolio}  
               />
-            )})}
+            )}):'LOADING'}
           </Box>
         </Box>
         {/* ========SIDE============================ */}

@@ -5,7 +5,7 @@ import { RiMoneyDollarBoxFill, RiBarChartBoxFill } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux'
 import { getPortfolio } from '../state/actions/portfolioActions'
 import { useNavigate } from 'react-router-dom'
-import {BsFillLightningChargeFill} from 'react-icons/bs'
+import { BsFillLightningChargeFill } from 'react-icons/bs'
 import Bar from './Bar';
 
 const calcGain = (portfolio) => {
@@ -53,7 +53,8 @@ const PortfolioPanel = ({ socket, cash, total: totalInvestment, tickers }) => {
             dispatch(getPortfolio())
         }
     }, [])
-    useEffect(() => {console.log('wallet changed')
+    useEffect(() => {
+        console.log('wallet changed')
         setBuyingPower(wallet)
     }, [wallet])
 
@@ -96,8 +97,12 @@ const PortfolioPanel = ({ socket, cash, total: totalInvestment, tickers }) => {
                         {/* <Typography variant='body2'>PAL: {portfolio['PAL'] && toLocale(portfolio['PAL'].value)}</Typography> */}
                     </Box>
                 </> :
-                <Button size='medium' variant='contained' onClick={() => navigate('/user/login')}>Login</Button>}
-                <Button size='medium' variant='text' onClick={() => navigate('/user/register')}>Register</Button>
+                <Box display='flex' sx={{flexDirection:'column', gap: 1,p:1}}>
+                <Typography variant='body2' color='text.main'>Login or Register to begin trading.</Typography>
+                    <Button size='medium' variant='contained' onClick={() => navigate('/user/login')}>Login</Button>
+                    <Button size='medium' variant='outlined' onClick={() => navigate('/user/')}>Register</Button>
+                </Box>
+            }
         </Box>
     )
 

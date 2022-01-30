@@ -9,19 +9,32 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
-import React from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../state/actions/userActions'
+import {useNavigate} from 'react-router-dom'
 const Header = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
+  const [email, setEmail] = useState('')
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { userInfo } = useSelector(state => state.userLogin)
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
+  useEffect(() => {
+    if (userInfo) setEmail(userInfo.email)
+    else setEmail('No user Logged in')
+  }, [userInfo]);
+
   return (
-    <Box display='flex' sx={{ width:'100%', alignItems: 'center' }}>
+    <Box display='flex' sx={{ width: '100%', alignItems: 'center' }}>
       <Box sx={{ display: 'flex', flexGrow: '1' }}>
         <Box sx={{ width: '35px' }}>
           {/* <img className='image-fit-cover' src='./candle.png' alt='logo?'/> */}
@@ -38,10 +51,10 @@ const Header = () => {
             aria-haspopup='true'
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{email ? email[0].toUpperCase() : '?'}</Avatar>
           </IconButton>
         </Tooltip>
-          <Typography variant='body1'>USER NAME</Typography>
+        <Typography variant='body1' sx={{ minWidth: '80px', maxWidth: '200px', cursor: 'pointer', textAlign: 'left' }}>{email && email }</Typography>
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -81,22 +94,27 @@ const Header = () => {
         <MenuItem>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <Avatar /> My account
-        </MenuItem>
+        </MenuItem> */}
         <Divider />
-        <MenuItem>
-          <ListItemIcon>{/* <PersonAdd fontSize='small' /> */}</ListItemIcon>
+        {/* <MenuItem>
+          <ListItemIcon><PersonAdd fontSize='small' /></ListItemIcon>
           Add another account
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem>
           <ListItemIcon>{/* <Settings fontSize='small' /> */}</ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>{/* <Logout fontSize='small' /> */}</ListItemIcon>
-          Logout
-        </MenuItem>
+        {!userInfo ?
+          <MenuItem onClick={() => navigate('/user/login')}>
+            <ListItemIcon>{/* <Logout fontSize='small' /> */}</ListItemIcon>
+            Login
+          </MenuItem> :
+          <MenuItem onClick={() => dispatch(logout())}>
+            <ListItemIcon>{/* <Logout fontSize='small' /> */}</ListItemIcon>
+            Logout
+          </MenuItem>}
       </Menu>
     </Box>
   )
