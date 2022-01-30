@@ -18,7 +18,7 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
     const [currentShares, setCurrentShares] = useState(0)
     const [data, setData] = useState([])
     const [currentPrice, setCurrentPrice] = useState(0)
-    const [range, setRange] = useState(1000)
+    const [range, setRange] = useState(360)
     // const [play, setPlay] = useState(true)
     // const [max, setMax] = useState(0)
     const [dataFilled, setDataFilled] = useState(false)
@@ -90,12 +90,11 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
 
     return (
         <>
-            <Box sx={{ p: 1, width: { sm: '100%', md: '50%' }, }}>
                 <Paper elevation={4} sx={{ display: 'flex', p: 1, flexDirection: 'column' }} >
                     {/* =====HEADER============================================== */}
                     <Box>
-                        <Typography variant='h3' color={color} fontWeight='600'>{ticker}</Typography>
-                        <Typography variant='body1' color='grey.400'>{name}</Typography>
+                        <Typography variant='h3' color={color} fontWeight='600'sx={{textShadow:`0 0 27px ${color}`}}>{ticker}</Typography>
+                        <Typography variant='body1' color='grey.400' >{name}</Typography>
                         <Typography variant='h6' color='success.main' fontWeight='600'>${toLocale(currentPrice)}</Typography>
                     </Box>
                     {/* =====HEADER============================================== */}
@@ -161,7 +160,6 @@ const Chart = ({ socket, tick: { _id, ticker, name, color, initialPrice, data: d
                     </Box>
 
                 </Paper>
-            </Box>
         </>
     )
 };

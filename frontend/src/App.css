@@ -1,12 +1,29 @@
 /* Lato: 300,400,700 || Monsterrat: 200,300,400,500,600,700 */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap");
 .image-fit-contain {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
-  }
-  .image-fit-cover {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.image-fit-cover {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.no-select {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+.logo-container:hover {
+  box-shadow: 0 0 20px #faffcf, 0 0 25px #f9ffc4 inset;
+}
+.logo-container{
+  border-radius: 5px;
+  cursor: pointer;
+}
+.logo-container img {
+  mix-blend-mode: multiply;
+  filter: brightness(100%);
+}

@@ -9,6 +9,12 @@ lightTheme = createTheme({
             dark: '#161819',
             contrastText: '#c9c9cC',
         },
+        secondary: {
+            light: '#1C1E1F',
+            main: '#181A1B',
+            dark: '#161819',
+            contrastText: '#eee',
+        },
     },
     typography: {
         body1: {
@@ -32,7 +38,7 @@ lightTheme = createTheme({
                 fontSize: '2rem',
             },
             [lightTheme.breakpoints.up('md')]: {
-                fontSize: '4rem',
+                fontSize: '3.5rem',
             },
         },
         h2: {
@@ -61,9 +67,6 @@ lightTheme = createTheme({
             [lightTheme.breakpoints.up('sm')]: {
                 fontSize: '1.2rem',
             },
-            [lightTheme.breakpoints.up('md')]: {
-                fontSize: '1.4rem',
-            },
         },
         h6: {
             fontSize: '.75rem',
@@ -71,7 +74,7 @@ lightTheme = createTheme({
                 fontSize: '.9rem',
             },
             [lightTheme.breakpoints.up('md')]: {
-                fontSize: '1.2rem',
+                fontSize: '1.1rem',
             },
         },
         fontFamily: 'Lato',
@@ -111,6 +114,12 @@ darkTheme = createTheme({
             dark: '#161819',
             contrastText: '#a9a9aC',
         },
+        secondary: {
+            light: '#fff',
+            main: '#fff',
+            dark: '#fff',
+            contrastText: '#111',
+        },
         success: {
             main: '#4ad44f',
             light: '#558c55',
@@ -136,65 +145,62 @@ darkTheme = createTheme({
     typography: {
         body1: {
             fontSize: '.55rem',
-            [darkTheme.breakpoints.up('md')]: {
+            [lightTheme.breakpoints.up('md')]: {
                 fontSize: '.6rem',
             },
-            [darkTheme.breakpoints.up('sm')]: {
+            [lightTheme.breakpoints.up('sm')]: {
                 fontSize: '.9rem',
             },
         },
         body2: {
             fontSize: '0.6rem',
-            [darkTheme.breakpoints.up('md')]: {
+            [lightTheme.breakpoints.up('md')]: {
                 fontSize: '1rem',
             },
         },
         h1: {
             fontSize: '1rem',
-            [darkTheme.breakpoints.up('sm')]: {
+            [lightTheme.breakpoints.up('sm')]: {
                 fontSize: '2rem',
             },
-            [darkTheme.breakpoints.up('md')]: {
-                fontSize: '4rem',
+            [lightTheme.breakpoints.up('md')]: {
+                fontSize: '3.5rem',
             },
         },
         h2: {
             fontSize: '1.2rem',
-            [darkTheme.breakpoints.up('sm')]: {
+            [lightTheme.breakpoints.up('sm')]: {
                 fontSize: '1.5rem',
             },
-            [darkTheme.breakpoints.up('md')]: {
+            [lightTheme.breakpoints.up('md')]: {
                 fontSize: '2rem',
             },
         },
         h3: {
             fontSize: '1.2rem',
-            [darkTheme.breakpoints.up('md')]: {
+            [lightTheme.breakpoints.up('md')]: {
                 fontSize: '1.8rem',
             },
         },
         h4: {
             fontSize: '1.22rem',
-            [darkTheme.breakpoints.up('md')]: {
+            [lightTheme.breakpoints.up('md')]: {
                 fontSize: '1.5rem',
             },
         },
         h5: {
             fontSize: '.85rem',
-            [darkTheme.breakpoints.up('sm')]: {
+            [lightTheme.breakpoints.up('sm')]: {
                 fontSize: '1.2rem',
-            },
-            [darkTheme.breakpoints.up('md')]: {
-                fontSize: '1.4rem',
             },
         },
         h6: {
             fontSize: '.75rem',
-            [darkTheme.breakpoints.up('sm')]: {
+            [lightTheme.breakpoints.up('sm')]: {
                 fontSize: '.9rem',
             },
-            [darkTheme.breakpoints.up('md')]: {
-                fontSize: '1.2rem',
+            [lightTheme.breakpoints.up('md')]: {
+                fontSize: '1.1rem',
             },
         },
         fontFamily: 'Lato',
@@ -211,15 +217,9 @@ darkTheme = createTheme({
             defaultProps: {
                 // variant:'contained',
                 size: 'small',
-                disableElevation: true,
 
             }
         }
-        // MuiPaper:{
-        //     defaultProps: {
-        //         elevation:
-        //     },
-        // }
     },
 
 

@@ -1,17 +1,16 @@
+import { ThemeContext } from '@emotion/react';
 import { Typography, Box } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Area, AreaChart, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { toLocale } from '../utils';
 
 // const mock = [{ name: 1, uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 100, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }]
 
 const ChartContainer = ({ range, data, color }) => {
-    useEffect(()=>{
-
-    },[data])
+    const {palette:{mode}}=useContext(ThemeContext)
     return (
         <>
-            <Box sx={{width:'100%',height:{xs:'300px',sm:'200px',md:'300px'}}}>
+            <Box sx={{width:'100%',height:{xs:'240px',sm:'200px',md:'300px'}}}>
                 <ResponsiveContainer>
                    
                     {color &&
@@ -20,7 +19,7 @@ const ChartContainer = ({ range, data, color }) => {
                                 <linearGradient id={color} x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="5%" stopColor={String(color)} stopOpacity={0.5} />
                                     <stop offset="60%" stopColor={String(color)} stopOpacity={0.15} />
-                                    <stop offset="95%" stopColor="#666" stopOpacity={0.1} />
+                                    <stop offset="95%" stopColor={mode==='light'?'#eee':'#222'} stopOpacity={0.1} />
                                 </linearGradient>
                             </defs>
                             <Tooltip content={<CustomToolTip />} />
@@ -49,7 +48,7 @@ const CustomToolTip = ({ active, payload, label }) => {
             {payload && payload.length && 
             <Box sx={{bgcolor:'white',p:1,borderRadius:1,border:'1px solid #ddd'}}>
                 {/* <Typography variant='body2'>{label}</Typography> */}
-                <Typography variant='body2' color='success.light'>${toLocale(payload[0].value)}</Typography>
+                <Typography variant='body2' color='success.light' className='no-select'>${toLocale(payload[0].value)}</Typography>
             </Box>
             }
         </>

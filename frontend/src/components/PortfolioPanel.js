@@ -1,52 +1,29 @@
-import { Accordion, AccordionDetails, AccordionSummary, accordionSummaryClasses, Box, Button, Divider, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Box, Button, Divider, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
 import { toLocale } from '../utils';
-import { RiMoneyDollarBoxFill, RiBarChartBoxFill } from "react-icons/ri";
+import { RiMoneyDollarBoxFill } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux'
 import { getPortfolio } from '../state/actions/portfolioActions'
 import { useNavigate } from 'react-router-dom'
 import { BsFillLightningChargeFill } from 'react-icons/bs'
 import Bar from './Bar';
+import { ThemeContext } from '@emotion/react';
 
-const calcGain = (portfolio) => {
-    let gain = 0
-    for (const property in portfolio) {
-        gain += portfolio[property].value - portfolio[property].shares * portfolio[property].avgCost
-    }
-    return gain
-}
-const calcPercent = (portfolio) => {
-    let totalCost = 0
-    let totalVal = 0
-    for (const prop in portfolio) {
-        let val = portfolio[prop].value
-        let purchaseCost = portfolio[prop].shares * portfolio[prop].avgCost
-        totalCost += purchaseCost
-        totalVal += val
-    }
-    return ((totalVal - totalCost) / totalCost)
-}
+// 
 
 // ========================================================================
 // ========================================================================
+
 const PortfolioPanel = ({ socket, cash, total: totalInvestment, tickers }) => {
     const [gain, setGain] = useState(0)
     const [gainPercent, setGainPercent] = useState(0)
     const [buyingPower, setBuyingPower] = useState(0)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    const {palette:{mode}}=useContext(ThemeContext)
     const { userInfo } = useSelector(state => state.userLogin)
     const { wallet, portfolio } = useSelector(state => state.userPortfolio)
 
-    // useEffect(() => {
-    //     // console.log(portfolio)
-    //     if (portfolio) {
-    //         setGain(calcGain(portfolio))
-    //         setGainPercent(calcPercent(portfolio))
-    //     }
-
-    // }, [portfolio])
     useEffect(() => {
         if (userInfo) {
             // console.log('FETCHING PORTFOLIO')
@@ -97,10 +74,10 @@ const PortfolioPanel = ({ socket, cash, total: totalInvestment, tickers }) => {
                         {/* <Typography variant='body2'>PAL: {portfolio['PAL'] && toLocale(portfolio['PAL'].value)}</Typography> */}
                     </Box>
                 </> :
-                <Box display='flex' sx={{flexDirection:'column', gap: 1,p:1}}>
-                <Typography variant='body2' color='text.main'>Login or Register to begin trading.</Typography>
-                    <Button size='medium' variant='contained' onClick={() => navigate('/user/login')}>Login</Button>
-                    <Button size='medium' variant='outlined' onClick={() => navigate('/user/')}>Register</Button>
+                <Box display='flex' sx={{ flexDirection: 'column', gap: 1, p: 1 }}>
+                    <Typography variant='body2' color='text.main'>Login or Register to begin trading.</Typography>
+                    <Button size='medium' color='secondary'variant='contained' onClick={() => navigate('/user/login')}>Login</Button>
+                    <Button size='medium' color='secondary'variant='outlined' onClick={() => navigate('/user/register')}>Register</Button>
                 </Box>
             }
         </Box>
@@ -178,6 +155,33 @@ const PortfolioPanel = ({ socket, cash, total: totalInvestment, tickers }) => {
 
     //     </Box >
     // )
+    // const calcGain = (portfolio) => {
+    //     let gain = 0
+    //     for (const property in portfolio) {
+    //         gain += portfolio[property].value - portfolio[property].shares * portfolio[property].avgCost
+    //     }
+    //     return gain
+    // }
+    // const calcPercent = (portfolio) => {
+    //     let totalCost = 0
+    //     let totalVal = 0
+    //     for (const prop in portfolio) {
+    //         let val = portfolio[prop].value
+    //         let purchaseCost = portfolio[prop].shares * portfolio[prop].avgCost
+    //         totalCost += purchaseCost
+    //         totalVal += val
+    //     }
+    //     return ((totalVal - totalCost) / totalCost)
+    // }
+
+    // useEffect(() => {
+    //     // console.log(portfolio)
+    //     if (portfolio) {
+    //         setGain(calcGain(portfolio))
+    //         setGainPercent(calcPercent(portfolio))
+    //     }
+
+    // }, [portfolio])
 };
 
 export default PortfolioPanel;

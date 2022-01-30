@@ -23,7 +23,6 @@ const drawerWidth = 240;
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
         flexGrow: 1,
-    
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -66,7 +65,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 //NAVIGATION DEFINITION STARTS HERE
-export default function Navigation({ children }) {
+export default function Navigation({ children,theme:currTheme,setTheme }) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -92,7 +91,7 @@ export default function Navigation({ children }) {
                         <MenuIcon />
                     </IconButton>
 
-                    <Header/>
+                    <Header theme={currTheme} setTheme={setTheme}/>
                 </Toolbar>
             </AppBar>
             <Drawer

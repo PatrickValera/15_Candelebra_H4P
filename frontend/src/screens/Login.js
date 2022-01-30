@@ -1,7 +1,7 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { login } from '../state/actions/userActions';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Login = () => {
@@ -32,10 +32,13 @@ const Login = () => {
     }, [userInfo, loginError])
 
     return (
-        <Container maxWidth='xs' sx={{display:'flex',alignItems:'center',minHeight:'90vh'}}>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                <Typography color='error' variant='body1'>{error&&error}</Typography>
+        <Container maxWidth='md' sx={{ display: 'flex', alignItems: 'center', minHeight: '90vh' }}>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%', p: 1 }}>
+                <Typography color='error' variant='body1'>{error && error}</Typography>
                 <TextField
+                    inputProps={{
+                        style: { fontSize: '20px' }
+                    }}
                     margin="normal"
                     required
                     fullWidth
@@ -45,9 +48,12 @@ const Login = () => {
                     autoComplete="email"
                     autoFocus
                     value={email}
-                    onChange={(e)=>setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextField
+                    inputProps={{
+                        style: { fontSize: '20px' }
+                    }}
                     margin="normal"
                     required
                     fullWidth
@@ -57,13 +63,13 @@ const Login = () => {
                     id="password"
                     autoComplete="current-password"
                     value={password}
-                    onChange={(e)=>setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
-                    size='medium'
+                    size='large'
                     sx={{ mt: 3, mb: 2 }}
                 >
                     Sign In

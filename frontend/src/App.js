@@ -21,10 +21,11 @@ function App() {
     <ThemeProvider theme={theme==='light'?lightTheme:darkTheme}>
       <ThemeContext.Provider value={'hello'}>
       <CssBaseline />
-      {/* <Header /> */}
       <Router>
+      {/* <Header /> */}
 
-        <Navigation>
+        <Navigation theme={theme} setTheme={setTheme}>
+
           <Routes>
             <Route path='/' element={<><Home /></>} />
             <Route path='/user' element={<Outlet />}>
@@ -32,8 +33,6 @@ function App() {
               <Route path='register' element={<Register />} />
             </Route>
           </Routes>
-      <Button onClick={handleThemeChange}>change theme</Button>
-
         </Navigation>
       </Router>
       </ThemeContext.Provider>

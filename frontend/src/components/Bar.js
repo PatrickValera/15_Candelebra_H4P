@@ -1,13 +1,14 @@
+import { ThemeContext } from '@emotion/react';
 import { Box, lighten, Paper, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toLocale, getColor } from '../utils';
-const color='#000'
 
 
 const Bar = ({ socket,share:id }) => {
     const [percent,setPercent]=useState(0)
     const [currentPrice,setCurrentPrice]=useState(0)
+    const theme=useContext(ThemeContext)
 
     const share=useSelector(state=>state.userPortfolio.portfolio[id])
     useEffect(()=>{
@@ -30,14 +31,14 @@ const Bar = ({ socket,share:id }) => {
     return (
         <>
             {share.shares>0&&
-                <Paper elevation={0} sx={{ my:1,p:1, bgcolor: lighten(getColor(color), .8), display: 'flex' }}>
+                <Paper elevation={0} sx={{ my:1,p:1, color:`${theme.palette.mode==='light'?'#eee':'#222'}`,bgcolor:`${theme.palette.mode==='light'?'#252525': '#eee'}`, display: 'flex' }}>
                     <Box sx={{flex:'1 1 auto'}}>
-                    <Typography variant='h6'color={color}>{share.ticker}</Typography>
-                    <Typography varaint='body2' color={color}>{share.shares} {share.shares>1?'shares':'share'}</Typography>
+                    <Typography variant='h6'>{share.ticker}</Typography>
+                    <Typography varaint='body2' >{share.shares} {share.shares>1?'shares':'share'}</Typography>
                     </Box>
-                    <Box>
-                        <Typography varaint='body1'color='primary'>${toLocale(share.shares*currentPrice)}</Typography>
-                        <Typography varaint='body1' fontWeight={600} color={percent>0?'green':'error'}>{toLocale(percent)}%</Typography>
+                    <Box sx={{textAlign:'right'}}>
+                        <Typography varaint='h6'>${toLocale(share.shares*currentPrice)}</Typography>
+                        <Typography varaint='body1' fontWeight={600} color={percent>0?'success.light':'error'}>{toLocale(percent)}%</Typography>
                     </Box>
 
                 </Paper>

@@ -6,17 +6,20 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
+  Switch,
   Tooltip,
   Typography,
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../state/actions/userActions'
-import {useNavigate} from 'react-router-dom'
-const Header = () => {
+import { useNavigate } from 'react-router-dom'
+
+const Header = ({theme,setTheme}) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const [email, setEmail] = useState('')
+  const [checked, setChecked] = useState(true)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -25,6 +28,9 @@ const Header = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
+  const handleChange=()=>{
+    setChecked(state=>!state)
+  }
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -32,16 +38,24 @@ const Header = () => {
     if (userInfo) setEmail(userInfo.email)
     else setEmail('No user Logged in')
   }, [userInfo]);
-
+  useEffect(()=>{
+    if(!checked)setTheme('dark')
+    else setTheme('light')
+  },[checked])
   return (
     <Box display='flex' sx={{ width: '100%', alignItems: 'center' }}>
+      <Box className='logo-container' sx={{ width: '30px',p:'3px' }}>
+        <img className='image-fit-cover' src='candle.png' alt='logo?'/>
+      </Box>
       <Box sx={{ display: 'flex', flexGrow: '1' }}>
-        <Box sx={{ width: '35px' }}>
-          {/* <img className='image-fit-cover' src='./candle.png' alt='logo?'/> */}
-        </Box>
-        <Typography varaint='h2'>CANDELEBRA</Typography>
+        <Typography varaint='h1' onClick={()=>navigate('/')} sx={{cursor:'pointer'}}>CANDELEBRA</Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+      <Switch
+      checked={checked}
+      onChange={handleChange}
+      inputProps={{ 'aria-label': 'controlled' }}
+    />
         <Tooltip title='Account settings'>
           <IconButton
             onClick={handleClick}
@@ -54,7 +68,7 @@ const Header = () => {
             <Avatar sx={{ width: 32, height: 32 }}>{email ? email[0].toUpperCase() : '?'}</Avatar>
           </IconButton>
         </Tooltip>
-        <Typography variant='body1' sx={{ minWidth: '80px', maxWidth: '200px', cursor: 'pointer', textAlign: 'left' }}>{email && email }</Typography>
+        <Typography variant='body1' sx={{ minWidth: '80px', maxWidth: '200px', cursor: 'pointer', textAlign: 'left' }}>{email && email}</Typography>
       </Box>
       <Menu
         anchorEl={anchorEl}
