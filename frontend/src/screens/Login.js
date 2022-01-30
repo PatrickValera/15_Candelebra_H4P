@@ -74,6 +74,15 @@ const Login = () => {
                 >
                     Sign In
                 </Button>
+                <Button
+                    onClick={loadDemo}
+                    fullWidth
+                    variant="outlined"
+                    size='large'
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Load Demo User
+                </Button>
             </Box>
         </Container >
     )

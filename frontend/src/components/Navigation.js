@@ -108,7 +108,7 @@ export default function Navigation({ children,theme:currTheme,setTheme }) {
                 open={open}
             >
                 <DrawerHeader sx={{ pb: '40px' }}>
-                    Useless Nav lul (for now)
+                    Nothing to see here
                     <IconButton onClick={handleDrawerClose}>
                         {'>'}
                         {/* {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />} */}

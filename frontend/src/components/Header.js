@@ -68,7 +68,7 @@ const Header = ({theme,setTheme}) => {
             <Avatar sx={{ width: 32, height: 32 }}>{email ? email[0].toUpperCase() : '?'}</Avatar>
           </IconButton>
         </Tooltip>
-        <Typography variant='body1' sx={{ minWidth: '80px', maxWidth: '200px', cursor: 'pointer', textAlign: 'left' }}>{email && email}</Typography>
+        <Typography variant='body1' sx={{ display:{xs:'none',md:'block'}, minWidth: '80px', maxWidth: '200px', cursor: 'pointer', textAlign: 'left' }}>{email && email}</Typography>
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -119,6 +119,10 @@ const Header = ({theme,setTheme}) => {
         <MenuItem>
           <ListItemIcon>{/* <Settings fontSize='small' /> */}</ListItemIcon>
           Settings
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>{/* <Settings fontSize='small' /> */}</ListItemIcon>
+          Leaderboard
         </MenuItem>
         {!userInfo ?
           <MenuItem onClick={() => navigate('/user/login')}>

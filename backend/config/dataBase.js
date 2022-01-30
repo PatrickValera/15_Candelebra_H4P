@@ -76,6 +76,10 @@ const stockPrice = async (socket, currPrice, delayMs, stockTicker, fluctuationRa
         price *=1.3
         console.log('BIG up spike: ', stockTicker)
       }
+      if (Math.floor(Math.random() * 1000) < 90 && price > 30000) {
+        price *=.8
+        console.log('BIG up spike: ', stockTicker)
+      }
 
       let up = Math.round(Math.random());
 
