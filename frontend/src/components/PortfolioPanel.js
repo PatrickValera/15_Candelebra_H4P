@@ -76,7 +76,7 @@ const PortfolioPanel = ({ socket, cash, total: totalInvestment, tickers }) => {
                 </> :
                 <Box display='flex' sx={{ flexDirection: 'column', gap: 1, p: 1 }}>
                     <Typography variant='body2' color='text.main'>Login or Register to begin trading.</Typography>
-                    <Button size='medium' color='secondary'variant='contained' onClick={() => navigate('/user/login')}>Login</Button>
+                    <Button size='medium' color='secondary'variant='contained' onClick={() => navigate('/user/login')}>Login w/ demo</Button>
                     <Button size='medium' color='secondary'variant='outlined' onClick={() => navigate('/user/register')}>Register</Button>
                 </Box>
             }

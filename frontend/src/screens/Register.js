@@ -5,18 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import { register } from '../state/actions/userActions';
 
 const Register = () => {
-    const [email,setEmail]=useState('')
-    const [password,setPassword]=useState('')
-    const [confirmPassword,setConfirmPassword]=useState('')
-    const [error,setError]=useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [error, setError] = useState('')
 
-    const navigate=useNavigate()
-    const dispatch=useDispatch()
-    const {userInfo,error:loginError}=useSelector(state=>state.userLogin)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { userInfo, error: loginError } = useSelector(state => state.userLogin)
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(password!==confirmPassword){
+        if (password !== confirmPassword) {
             setError('Password and confirm password must match')
             return
         }
@@ -27,7 +27,7 @@ const Register = () => {
             email: data.get('email'),
             password: data.get('password'),
         });
-        dispatch(register(data.get('email'),data.get('password')))
+        dispatch(register(data.get('email'), data.get('password')))
     };
 
     useEffect(() => {
@@ -39,10 +39,13 @@ const Register = () => {
         }
     }, [userInfo, loginError])
     return (
-        <Container maxWidth='xs' sx={{display:'flex',alignItems:'center',minHeight:'90vh'}}>
+        <Container maxWidth='xs' sx={{ display: 'flex', alignItems: 'center', minHeight: '90vh' }}>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                <Typography variant='body2' color='error'>{error&&error}</Typography>
+                <Typography variant='body2' color='error'>{error && error}</Typography>
                 <TextField
+                    inputProps={{
+                        style: { fontSize: '20px' }
+                    }}
                     margin="normal"
                     required
                     fullWidth
@@ -52,9 +55,12 @@ const Register = () => {
                     autoComplete="email"
                     autoFocus
                     value={email}
-                    onChange={e=>setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                 />
                 <TextField
+                    inputProps={{
+                        style: { fontSize: '20px' }
+                    }}
                     margin="normal"
                     required
                     fullWidth
@@ -64,9 +70,12 @@ const Register = () => {
                     id="password"
                     autoComplete="current-password"
                     value={password}
-                    onChange={e=>setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                 />
                 <TextField
+                    inputProps={{
+                        style: { fontSize: '20px' }
+                    }}
                     margin="normal"
                     required
                     fullWidth
@@ -76,7 +85,7 @@ const Register = () => {
                     id="confirm password"
                     autoComplete="current-password"
                     value={confirmPassword}
-                    onChange={e=>setConfirmPassword(e.target.value)}
+                    onChange={e => setConfirmPassword(e.target.value)}
                 />
                 <Button
                     type="submit"
