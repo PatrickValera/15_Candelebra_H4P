@@ -94,7 +94,7 @@ const stockPrice = async (socket, currPrice, delayMs, stockTicker, fluctuationRa
         price -= Math.random() * price * .03;
         up = true;
       }
-      if (price <= 0 || typeof price!==number) {
+      if (price <= 0 || typeof price!=='number') {
         price = 1;
       }
 
