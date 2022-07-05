@@ -1,26 +1,30 @@
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
-  Switch,
   Tooltip,
   Typography,
 } from '@mui/material'
+import { BsSunFill } from 'react-icons/bs'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../state/actions/userActions'
 import { useNavigate } from 'react-router-dom'
+import { BsMoonStarsFill } from 'react-icons/bs'
+import { VscGraph } from 'react-icons/vsc'
 
-const Header = ({theme,setTheme}) => {
+const Header = ({ theme, setTheme }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const [email, setEmail] = useState('')
   const [checked, setChecked] = useState(true)
 
+  console.log(theme)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { userInfo } = useSelector(state => state.userLogin)
@@ -28,34 +32,36 @@ const Header = ({theme,setTheme}) => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
-  const handleChange=()=>{
-    setChecked(state=>!state)
+  const handleChange = () => {
+    setChecked(state => !state)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
   useEffect(() => {
     if (userInfo) setEmail(userInfo.email)
-    else setEmail('No user Logged in')
+    else setEmail('Login')
   }, [userInfo]);
-  useEffect(()=>{
-    if(!checked)setTheme('dark')
+  useEffect(() => {
+    if (!checked) setTheme('dark')
     else setTheme('light')
-  },[checked])
+  }, [checked])
   return (
     <Box display='flex' sx={{ width: '100%', alignItems: 'center' }}>
-      <Box className='logo-container' sx={{ width: '30px',p:'3px' }}>
-        <img className='image-fit-cover' src='candle.png' alt='logo?'/>
+      {/* LOGO ========================= */}
+      <Box sx={{ width: '30px', p: '3px' }}>
+        <VscGraph style={{ fontSize: '1.5rem' }} />
       </Box>
+      {/* NAME ========================= */}
       <Box sx={{ display: 'flex', flexGrow: '1' }}>
-        <Typography varaint='h1' onClick={()=>navigate('/')} sx={{cursor:'pointer'}}>CANDELEBRA</Typography>
+        <Typography varaint='h1' onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>TRADE SIM</Typography>
       </Box>
+      {/* ACCOUNT MENU AND THEME TOGGLE =========== */}
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-      <Switch
-      checked={checked}
-      onChange={handleChange}
-      inputProps={{ 'aria-label': 'controlled' }}
-    />
+
+        <Button variant='text' sx={{ color: 'secondary.main', p: '.3rem', fontSize: '1.2rem', minWidth: 'unset' }} onClick={handleChange} >
+          {theme === 'light' ? <BsMoonStarsFill style={{ color: 'inherit' }} /> : <BsSunFill />}
+        </Button>
         <Tooltip title='Account settings'>
           <IconButton
             onClick={handleClick}
@@ -68,7 +74,7 @@ const Header = ({theme,setTheme}) => {
             <Avatar sx={{ width: 32, height: 32 }}>{email ? email[0].toUpperCase() : '?'}</Avatar>
           </IconButton>
         </Tooltip>
-        <Typography variant='body1' sx={{ display:{xs:'none',md:'block'}, minWidth: '80px', maxWidth: '200px', cursor: 'pointer', textAlign: 'left' }}>{email && email}</Typography>
+        <Typography variant='body1' sx={{ display: { xs: 'none', md: 'block' }, minWidth: '80px', maxWidth: '200px', cursor: 'pointer', textAlign: 'left' }}>{email && email}</Typography>
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -112,25 +118,18 @@ const Header = ({theme,setTheme}) => {
           <Avatar /> My account
         </MenuItem> */}
         <Divider />
-        {/* <MenuItem>
-          <ListItemIcon><PersonAdd fontSize='small' /></ListItemIcon>
-          Add another account
-        </MenuItem> */}
+
         <MenuItem>
-          <ListItemIcon>{/* <Settings fontSize='small' /> */}</ListItemIcon>
           Settings
         </MenuItem>
         <MenuItem>
-          <ListItemIcon>{/* <Settings fontSize='small' /> */}</ListItemIcon>
           Leaderboard
         </MenuItem>
         {!userInfo ?
           <MenuItem onClick={() => navigate('/user/login')}>
-            <ListItemIcon>{/* <Logout fontSize='small' /> */}</ListItemIcon>
             Login
           </MenuItem> :
           <MenuItem onClick={() => dispatch(logout())}>
-            <ListItemIcon>{/* <Logout fontSize='small' /> */}</ListItemIcon>
             Logout
           </MenuItem>}
       </Menu>

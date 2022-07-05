@@ -115,9 +115,9 @@ darkTheme = createTheme({
             contrastText: '#a9a9aC',
         },
         secondary: {
-            light: '#fff',
-            main: '#fff',
-            dark: '#fff',
+            light: '#FFA726',
+            main: '#FFA726',
+            dark: '#FFA726',
             contrastText: '#111',
         },
         success: {

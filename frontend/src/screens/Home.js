@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from '../components/Chart'
 import PortfolioPanel from '../components/PortfolioPanel'
@@ -14,18 +14,6 @@ const Home = () => {
   const socket = useRef()
   const [portfolio, setPortfolio] = useState({})
 
-  // useEffect(()=>{
-  //     let tot=0
-  //   // console.log('CALCULATING=====')
-  //   for (const prop in portfolio) {
-  //     // console.log(prop)
-  //     let aNum=portfolio[prop].value
-  //     if(portfolio[prop])tot = tot+aNum
-  //     // console.log(tot)
-
-  //   }
-  //   setTotal(tot)
-  // },[portfolio])
   const fetchData = async () => {
     const { data } = await axios.get('/api/stock')
     setTickers(data)
@@ -34,23 +22,23 @@ const Home = () => {
   useEffect(() => {
     fetchData()
     socket.current = io(window.location.pathname);
-    // console.log(socket.current)
   }, [])
   return (
     <>
-      <Box display='flex' sx={{ position: 'relative', flexWrap: { xs: 'wrap', sm: 'noWrap',minHeight:'95vh' } }}>
-        {/* ========HEADER============================ */}
-        <Box sx={{ flex: '1 5 250px', p: { xs: 1, md: 3 }, order: { xs: '2', sm: '1' }, }}>
-          <Box>
-            <Typography variant='h1' fontWeight='700'>Stonk Market</Typography>
-            <Typography variant='h5' color='grey.600'>Trending Stonks</Typography>
+      <Container maxWidth='xl'sx={{display:'flex', p:0, position: 'relative',flexDirection:'row', flexWrap: 'wrap',minHeight: '95vh'  }}>
+        {/* ======= HEADER AND TICKERS ============ */}
+        <Box sx={{ flex: '2 1 350px', p: { xs: 0, md: 3 }, order: { xs: '2', sm: '1' }, }}>
+          {/* ========HEADER============================ */}
+          <Box sx={{px:1}}>
+            <Typography variant='h1' fontWeight='600'>Stock Market</Typography>
+            <Typography variant='h5' color='grey.600'>Trending Stocks</Typography>
 
           </Box>
           {/* ========TICKERS============================ */}
           <Box display='flex' sx={{ flexWrap: 'wrap' }}>
             {tickers ? socket.current && tickers.map((tick, index) => {
               return (
-                <Box key={index} sx={{width:{xs:'100%', md:'50%'}, p:1}}>
+                <Box key={index} sx={{ width: { xs: '100%', md: '100%' }, p: 1 }}>
                   <Chart news={modifier[Math.floor(Math.random() * 2)]} tick={tick} socket={socket} setCash={setCash} cash={cash} />
                 </Box>
               )
@@ -58,11 +46,12 @@ const Home = () => {
           </Box>
         </Box>
         {/* ========SIDE============================ */}
-        <Box sx={{ flex: { xs: '1 1 250px', sm: '0 1 300px' }, order: { xs: '1', sm: '2' } }}>
+        <Box sx={{ flex: { xs: '1 1 250px', sm: '1 1 100px' }, order: { xs: '1', sm: '2' } }}>
           <PortfolioPanel socket={socket} cash={cash} portfolio={portfolio} total={total} tickers={tickers} />
         </Box>
+    
 
-      </Box>
+      </Container>
     </>
   )
 };

@@ -10,7 +10,7 @@ const ChartContainer = ({ range, data, color }) => {
     const {palette:{mode}}=useContext(ThemeContext)
     return (
         <>
-            <Box sx={{width:'100%',height:{xs:'240px',sm:'200px',md:'300px'}}}>
+            <Box sx={{width:'100%',height:{xs:'160px',sm:'200px',md:'280px'}}}>
                 <ResponsiveContainer>
                    
                     {color &&
